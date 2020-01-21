@@ -1,4 +1,10 @@
 
+function pridatDoKosikuCokie(cname, cvalue, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  var expires = "expires="+ d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
 $(document).ready(function(){
   $(':submit').on('click', function() { // This event fires when a button is clicked
     var button = $(this).val();
@@ -17,7 +23,7 @@ $(document).ready(function(){
           //alert(klic + ': ' + obsah);
           html += '<td>' + obsah + '</td>';
         });
-        html += '</tr>';     
+        html += 'html += <td><button ,id='+value.ID+' name='+value.ID+',onclick="pridatDoKosikuCokie('+value.ID+'),text="pridat do kosiku"" >Přidat do košíku</button></td></tr>';     
       });
       
       html += '</table>';

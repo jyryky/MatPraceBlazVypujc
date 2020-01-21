@@ -25,7 +25,6 @@ if (index > -1) {
 }
     }
     else{
-
     }
  </script>
  let  checkboxy = [];

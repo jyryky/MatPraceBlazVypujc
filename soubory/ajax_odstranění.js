@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
     $(':submit').on('click', function() { // This event fires when a button is clicked
       var button = $(this).val();
