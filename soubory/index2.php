@@ -1,4 +1,4 @@
-\<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <title>Blažrent</title>
 <meta charset="UTF-8">
@@ -30,6 +30,9 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
     </div>
     <div id="produkty">
 
+    </div>
+    <div>
+        <a href =zobrazitkosik.php >zobrazit košík</a>
     </div>
     <div>
         <a href =pridat.html >přidat do databáze</a>
