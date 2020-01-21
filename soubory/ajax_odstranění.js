@@ -13,7 +13,7 @@ $(document).ready(function(){
         let fruits = [];
         $.each(data, function(key, value) {
              console.log("data",data);
-          html += '<tr><div id='+value.ID+'>';
+          html += '<tr><div id='+value.ID+'>';  
           $.each(value, function(klic, obsah) {
             //alert(klic + ': ' + obsah);
             html += '<td> ' + obsah + '</td>';

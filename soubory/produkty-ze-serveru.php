@@ -21,7 +21,7 @@ if ($conn->connect_error) {
 $button = $_GET['button'];
 //$button ="audio";
 
-$sql = "SELECT `Název`,`Kategorie`,`Cena`,Dostupnost FROM `MP_produkty` WHERE `Kategorie`='$button' ";
+$sql = "SELECT  `ID`,  `Název`,`Kategorie`,`Cena`,Dostupnost FROM `MP_produkty` WHERE `Kategorie`='$button' ";
 $result = $conn->query($sql);
 
 

@@ -11,14 +11,17 @@ $(document).ready(function(){
       dataType: 'json', // Choosing a JSON datatype
     })
     .done(function(data) { // Variable data contains the data we get from serverside
-      //alert(data);
-      var html = '<table border=1><tr><th>název</th><th>kategorie</th><th>cena</th><th>dostupnost</th> <th>pridat do kosiku</th></tr>';
-      
+      alert(data);
+      data = data.data;
+      produkt = new produkt({
+        ID: data.ID,
+        Jmeno: data.Nazev,
+        Kategorie: data.Kategorie,
+        Cena: data.Cena })
       $.each(data, function(key, value) {
         html += '<tr>';
         $.each(value, function(klic, obsah) {
           //alert(klic + ': ' + obsah);
-          console.log(klic + ': ' + obsah);
           html += '<td>' + obsah + '</td>';
         });
         html += '<td><button id=button name= '+value.ID+' onclick="pridatDoKosikuCookie('+value.ID+')" text="pridat do kosiku" >Přidat do košíku</button></td></tr>';     
