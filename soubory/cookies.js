@@ -15,17 +15,21 @@ console.log(x);
 return (cname)
 }
 
-function getCookie() {
-    var getting = browser.cookies.getAll(
-        details                // object
-      )
-    for (i = 0; i < 100; i++){
-        var v = document.cookie.test('(^|;) ?' + i + '=([^;]*)(;|$)');
-        if (v==true){
-            console.log(i);
-            return(i);
-        }
-    }
-    
+
+function get_cookies_array() {
+
+  var cookies = { };
+
+  if (document.cookie && document.cookie != '') {
+      var split = document.cookie.split(';');
+      for (var i = 0; i < split.length; i++) {
+          var name_value = split[i].split("=");
+          name_value[0] = name_value[0].replace(/^ /, '');
+          cookies[decodeURIComponent(name_value[0])] = decodeURIComponent(name_value[1]);
+      }
+  }
+  console.log(cookies);
+  return cookies;
+ 
 }
 
