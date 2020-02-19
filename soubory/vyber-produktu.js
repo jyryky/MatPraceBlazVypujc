@@ -21,7 +21,7 @@ $(document).ready(function(){
           console.log(klic + ': ' + obsah);
           html += '<td>' + obsah + '</td>';
         });
-        html += '<td><input type="number" name="pocet" id=pocetkusu'+value.ID+'><button id=button1 name='+value.ID+' onclick="pridatDoKosikuCookie('+value.ID+')" text="pridat do kosiku" >Přidat do košíku</button></td></tr>';     
+        html += '<td><input type="number" name="pocet" id="pocetkusu'+value.ID+'"><button id=button1 name='+value.ID+' onclick="pridatDoKosikuCookie('+value.ID+')" text="pridat do kosiku" >Přidat do košíku</button></td></tr>';     
       });
       html += '</table>';
       $('#produkty').html(html); 

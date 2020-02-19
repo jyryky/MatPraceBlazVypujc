@@ -18,6 +18,10 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 <body onload="get_cookies_array()">
 <form method="post" action="">
 <button value='cookies' type="submit">audio</button>
+<?php
+$pocet_cookies=count($_COOKIE);
+echo $pocet_cookies;
+?>
 </form>
 
 </body>

@@ -15,27 +15,10 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 
 </form>
 <body>
-<script>
-function myFunction() {//přidání do arraye
-    x=document.getElementById("myCheck")
-    if(checkboxy.includes("id")==true){
-        const index = array.indexOf(5);
-if (index > -1) {
-  array.splice(index, 1);
-}
-    }
-    else{
-    }
- </script>
- let  checkboxy = [];
     <button value="zobraz" type="submit">zobraz</button>
     <div id="produkty">
 
     </div>
- <input type="submit" value="submit" form="formular_odebrat">
- 
- <script>
-
- </script>
+ <input type="submit" value="submit" form="formular_odebrat">   
 </body>
 </html>

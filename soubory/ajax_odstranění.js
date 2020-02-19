@@ -1,7 +1,14 @@
 
+function myFunction(){
+  var checked = document.querySelector('.checkboxy:checked');
+  console.log(checked);
+}
+
 $(document).ready(function(){
     $(':submit').on('click', function() { // This event fires when a button is clicked
       var button = $(this).val();
+      var checked = document.querySelector('.checkboxy:checked');
+      console.log(checked);
       $.ajax({ // ajax call starts
         url: 'nacist_vsechny_produkty.php', // JQuery loads serverside.php
         data: 'button=' + $(this).val(), // Send value of the clicked button
@@ -18,10 +25,8 @@ $(document).ready(function(){
             //alert(klic + ': ' + obsah);
             html += '<td> ' + obsah + '</td>';
           });
-          html += '<td><input type="checkbox",id='+value.ID+' name='+value.ID+',onclick="myFunction()"form="formular_odebrat" >smazat?</input></td></div></tr>';     
-        console.log("value",value)
-        fruits.push(value.ID)
-        console.log(fruits)
+          html += '<td><input type="checkbox" id='+value.ID+' name='+value.ID+' class="checkboxy" onclick="myFunction()"form="formular_odebrat" >smazat?</input></td></div></tr>';     
+        
  
         });
         
