@@ -18,25 +18,6 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 <form method="post" action="">
 <a href=index.php>Zpět na hlavní stránku</a>
 <?php
-/*$db_user="root";
-$db_pass="";
-$db_db="matprac";
-// Create connection
-$conn = new mysqli("localhost",$db_user, $db_pass,$db_db);
-$conn->set_charset("utf8");
-
-// Check connection
-if ($conn->connect_error) {
-	echo "konec";
-    die("Connection failed: " . $conn->connect_error);
-} 
-
-$pocet_cookies=count($_COOKIE);
-echo $pocet_cookies;*/
-
-
-
-//if(isset($_SESSION["kosik"])){
     session_start(); ?>
     <div style="clear:both"></div>
     <br />
@@ -73,12 +54,16 @@ echo $pocet_cookies;*/
                 <td align="right">$ <?php echo number_format($total, 2); ?></td>
                 <td></td>
             </tr>
+             
             <?php
             }//}
             ?>
-                
+               
         </table>
     </div>
+
+    <button class="btn btn-success" ><a href="odeslat_email.php"> Dokončit objednávku </a></button>
+    
 </div>
 </div>
 <br />

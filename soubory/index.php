@@ -95,11 +95,15 @@ if(isset($_GET["action"]))
 					</div>
 				</form>
 			</div>
+					<div class="pridat do kosiku">
+			
+			
 			<?php
 					}
 				}
 			?>
-			
+			<button onclick="window.location.href = 'zobrazitkosik.php';"style="margin-top:5px;" class="btn btn-success" >zobrazit kosik</button>
+					</div>
 	</body>
 </html>
 

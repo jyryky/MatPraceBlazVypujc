@@ -19,16 +19,44 @@ Telefon: <input type="text" name="tel"><br>
 <input type="submit" >
 </form>
 <?php
+
+session_start();
 if (isset($_POST["email"])){
 $prijemce = $_POST["email"];
 $jmeno  = $_POST["name"];
 $tel =$_POST["tel"];
 $predmet = "Objednavka Blazrent";
-$txt = "Vaše Objednavka Č.XXX \n Pro: ".$prijemce."\n Email: ".$prijemce."\n tel:".$tel."Máte objednáno: XXX";
-$txt = wordwrap($txt,70);
+
+if(!empty($_SESSION["kosik"]))
+{
+    $total = 0;
+    foreach($_SESSION["kosik"] as $keys => $values)
+    {
+$txt = "Vaše Objednavka Č.XXX \n Pro: ".$prijemce."\n <br> Email: ".$prijemce."\n<br> tel:".$tel."<br> Máte objednáno:  \n  <div class=\"table-responsive\"> <table class=\"table table-bordered\"> <tr>
+<th width=>Item Name</th>
+<th width=>Quantity</th>
+<th width=>Price</th>
+<th width=>total</th>
+
+</tr>";
+foreach($_SESSION["kosik"] as $keys => $values)
+    {.
+"<tr>
+<td>".$values["item_name"]."</td>
+<td>".$values["item_quantity"]."</td>
+<td>".$values["item_price"]."</td>
+<td>".number_format($values["item_quantity"] * $values["item_price"], 2)."</td>"
+}."
+</tr>
+</table>
+   
+</div>";
+    }}
+//$txt = wordwrap($txt,70);
 $headers = "From: kuablec.jiri@sspbrno.cz" . "\r\n";
 $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-echo ($prijemce. $jmeno.$tel);
+echo ($txt);
+
 mail($prijemce,$predmet,$txt,$headers);
 ?>
 </body>
