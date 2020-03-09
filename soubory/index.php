@@ -92,6 +92,8 @@ if(isset($_GET["action"]))
 
 						<input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-success" value="Add to Cart" />
 
+						
+
 					</div>
 				</form>
 			</div>
