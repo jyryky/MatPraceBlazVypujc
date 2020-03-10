@@ -40,10 +40,39 @@ $predmet = "Objednavka Blazrent";
 $objednavka_od=$_POST["date_from"];
 $objednavka_do=$_POST["date_to"];
 
+$date=date("Y-m-d");
+//echo $date;
+$sql = "INSERT INTO mp_zakaznici (jmeno,prijmeni,email,telefon,datum_objednavky)
+        VALUES ('$jmeno', '$prijmeni','$prijemce', '$tel','$date')";
+//$connect->query($sql)
+$connect->query($sql);
+///////////////////
+
+//Zápis objednávky
+$sql = "INSERT INTO mp_vypujcka(od,do,id_zakaznika)
+VALUES('$objednavka_od','$objednavka_od',(SELECT id FROM mp_zakaznici
+WHERE jmeno = '$jmeno' AND prijmeni = '$prijmeni' AND email='$prijemce' AND telefon='$tel' AND datum_objednavky='$date'
+ ORDER BY id DESC LIMIT 1))";
+$connect->query($sql);
+
+//výpis ID objednávky
+$sql = "SELECT id FROM `mp_vypujcka` WHERE ( SELECT id FROM mp_zakaznici
+WHERE jmeno = '$jmeno' AND prijmeni = '$prijmeni' AND email='$prijemce' AND telefon='$tel' AND datum_objednavky='$date'
+)
+ORDER BY id DESC LIMIT 1";
+$result=$connect->query($sql);
+
+while($row= $result->fetch_assoc()) {
+    $Id_objednavky=$row["id"];
+    echo $Id_objednavky;
+}
+
+
+
 if(!empty($_SESSION["kosik"]))
 {
     $total = 0;  
-$txt = "Vaše Objednavka Č.XXX \n Pro: ".$prijemce." ".$prijmeni."\n  <br> Email: ".$prijemce."\n<br> tel:".$tel."<br> Máte objednáno:  \n  <div class=\"table-responsive\"> <table class=\"table table-bordered\"> <tr>
+$txt = "Vaše Objednavka Č.".$Id_objednavky." \n Pro: ".$prijemce." ".$prijmeni."\n  <br> Email: ".$prijemce."\n<br> tel:".$tel."<br> Máte objednáno:  \n  <div class=\"table-responsive\"> <table class=\"table table-bordered\"> <tr>
 <th width=>Item Name</th>
 <th width=>Quantity</th>
 <th width=>Price</th>
@@ -76,20 +105,8 @@ $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 echo ($txt);
 
 
-//zápis zákazníka//////////////
-mail($prijemce,$predmet,$txt,$headers);
-$date=date("Y-m-d");
-//echo $date;
-$sql = "INSERT INTO mp_zakaznici (jmeno,prijmeni,email,telefon,datum_objednavky)
-        VALUES ('$jmeno', '$prijmeni','$prijemce', '$tel','$date')";
-//$connect->query($sql)
-$connect->query($sql)
-///////////////////
-
-//Zápis objednávky
-$sql = "INSERT INTO mp_vypujcka(od,do,id_zakaznika)
-VALUES("$objednavka_od","$objednavka_od",(SELECT id FROM mp_zakaznici WHERE jmeno = 'jirka' ORDER BY id DESC LIMIT 1))"
-$connect->query($sql)
+//odeslání mailu
+//mail($prijemce,$predmet,$txt,$headers);
 
 
 ?>
