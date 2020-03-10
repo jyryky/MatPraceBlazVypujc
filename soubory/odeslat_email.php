@@ -11,9 +11,8 @@
 html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 </style>
 <body>
-<h2>formular</h2> 
 <form method="post" action="odeslat_email.php" id="odeslani_objednavky">
-Jméno Příjmení: <input type="text" name="name"><br>
+Jméno: <input type="text" name="name"><br>
 Příjmení: <input type="text" name="surname"><br>
 E-mail: <input type="text" name="email"><br>
 Telefon: <input type="text" name="tel"><br>
@@ -74,8 +73,8 @@ $txt.="
 //$txt = wordwrap($txt,70);
 $headers = "From: kuablec.jiri@sspbrno.cz" . "\r\n";
 $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-//echo ($txt);
-//////////////////////////////////////
+echo ($txt);
+
 
 //zápis zákazníka//////////////
 mail($prijemce,$predmet,$txt,$headers);
@@ -87,6 +86,10 @@ $sql = "INSERT INTO mp_zakaznici (jmeno,prijmeni,email,telefon,datum_objednavky)
 $connect->query($sql)
 ///////////////////
 
+//Zápis objednávky
+$sql = "INSERT INTO mp_vypujcka(od,do,id_zakaznika)
+VALUES("$objednavka_od","$objednavka_od",(SELECT id FROM mp_zakaznici WHERE jmeno = 'jirka' ORDER BY id DESC LIMIT 1))"
+$connect->query($sql)
 
 
 ?>
