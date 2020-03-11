@@ -43,7 +43,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
                 <td><?php echo $values["item_quantity"]; ?></td>
                 <td>$ <?php echo $values["item_price"]; ?></td>
                 <td>$ <?php echo number_format($values["item_quantity"] * $values["item_price"], 2);?></td>
-                <td><a href="index.php?action=delete&ID=<?php echo $values["item_id"]; ?>"><span class="text-danger">Remove</span></a></td>
+                <td><a href="zobrazitkosik.php?action=delete&ID=<?php echo $values["item_id"]; ?>"><span class="text-danger">Remove</span></a></td>
             </tr>
             <?php
                     $total = $total + ($values["item_quantity"] * $values["item_price"]);

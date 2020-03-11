@@ -18,7 +18,7 @@ E-mail: <input type="text" name="email"><br>
 Telefon: <input type="text" name="tel"><br>
 objednavka od: <input type="date" name="date_from">
 objednavka do: <input type="date" name="date_to">
-<input type="submit" >
+<input type="submit" name="submit" >
 </form>
 <?php
 $db_user="root";
@@ -31,7 +31,7 @@ $connect = new mysqli("localhost",$db_user, $db_pass,$db_db);
 
 //posílání emailu /////////////////////
 session_start();
-if (isset($_POST["email"])){
+if (isset($_POST["email"]) & isset($_POST["name"]) & isset($_POST["surname"]) & isset($_POST["tel"]) & isset($_POST["date_from"]) & isset($_POST["date_to"])){
 $prijemce = $_POST["email"];
 $jmeno  = $_POST["name"];
 $prijmeni =$_POST["surname"];
@@ -61,18 +61,29 @@ WHERE jmeno = '$jmeno' AND prijmeni = '$prijmeni' AND email='$prijemce' AND tele
 )
 ORDER BY id DESC LIMIT 1";
 $result=$connect->query($sql);
-
 while($row= $result->fetch_assoc()) {
     $Id_objednavky=$row["id"];
-    echo $Id_objednavky;
+    //echo $Id_objednavky;
 }
 
-
-
-if(!empty($_SESSION["kosik"]))
+//přidělení techniky k objedavce
+foreach($_SESSION["kosik"] as $keys => $values)
 {
-    $total = 0;  
-$txt = "Vaše Objednavka Č.".$Id_objednavky." \n Pro: ".$prijemce." ".$prijmeni."\n  <br> Email: ".$prijemce."\n<br> tel:".$tel."<br> Máte objednáno:  \n  <div class=\"table-responsive\"> <table class=\"table table-bordered\"> <tr>
+$forID=$values["item_id"]  ;
+$sql="INSERT INTO `vypujcka-produkty` (`id_technika`,`id_vypujcka`)
+VALUES((SELECT `ID` FROM `mp_produkty`
+WHERE ID = '$forID') ,(SELECT `id` FROM `mp_vypujcka`
+WHERE id = '$Id_objednavky'))";
+$connect->query($sql);
+    }
+
+//email zpáva 
+if(!empty($_SESSION["kosik"])){
+$total = 0;  
+$txt = "Vaše Objednavka Č.".$Id_objednavky." \n Pro: ".$prijemce." ".$prijmeni."\n  <br> Email: ".$prijemce."\n<br> tel:".$tel."<br>
+OD:".$objednavka_od."\n<br>
+DO:".$objednavka_do."\n<br>
+Máte objednáno:  \n  <div class=\"table-responsive\"> <table class=\"table table-bordered\"> <tr>
 <th width=>Item Name</th>
 <th width=>Quantity</th>
 <th width=>Price</th>
@@ -86,6 +97,8 @@ $add="
 <td>".$values["item_name"]."</td>
 <td>".$values["item_quantity"]."</td>
 <td>".$values["item_price"]."</td>
+
+
 <td>".number_format($values["item_quantity"] * $values["item_price"], 2)."</td>
 </tr>"
 ;
@@ -97,6 +110,7 @@ $txt.="
    
 </div>";
 }
+///email zprava konec
 
 
 //$txt = wordwrap($txt,70);
@@ -113,6 +127,11 @@ echo ($txt);
 </body>
 </html>
 <h1>vaše objednávka byla uspěšně odeslána</h1>
-<?php } ?>
+<?php } 
+elseif (isset($_POST["submit"])) {
+echo "<br>nevyplnil jste všechny údaje";
+ }
+
+?>
 </body>
 </html>
