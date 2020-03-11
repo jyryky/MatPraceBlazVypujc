@@ -11,6 +11,7 @@
 html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 </style>
 <body>
+<input type="button" value="zobrazit košík" onclick="window.location.href='zobrazitkosik.php'; "style="margin:5px;" class="btn btn-success">
 <form method="post" action="odeslat_email.php" id="odeslani_objednavky">
 Jméno: <input type="text" name="name"><br>
 Příjmení: <input type="text" name="surname"><br>

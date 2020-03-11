@@ -61,9 +61,11 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
                
         </table>
     </div>
-
-    <button class="btn btn-success" ><a href="odeslat_email.php"> Dokončit objednávku </a></button>
+    <div class="pridat do kosiku">
+     
     
+    <input type="button" value="Dokončit objednávku" onclick="window.location.href='odeslat_email.php'; "style="margin-top:5px;" class="btn btn-success">
+</div>
 </div>
 </div>
 <br />
