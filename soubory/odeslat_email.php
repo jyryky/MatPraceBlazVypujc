@@ -32,7 +32,7 @@ $connect = new mysqli("localhost",$db_user, $db_pass,$db_db);
 
 //posílání emailu /////////////////////
 session_start();
-if (isset($_POST["email"]) & isset($_POST["name"]) & isset($_POST["surname"]) & isset($_POST["tel"]) & isset($_POST["date_from"]) & isset($_POST["date_to"])){
+if (isset($_POST["email"]) && isset($_POST["name"]) && isset($_POST["surname"]) && isset($_POST["tel"]) && isset($_POST["date_from"]) && isset($_POST["date_to"])){
 $prijemce = $_POST["email"];
 $jmeno  = $_POST["name"];
 $prijmeni =$_POST["surname"];
