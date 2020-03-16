@@ -63,6 +63,12 @@ if(isset($_GET["action"]))
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	</head>
 	<body>
+	<div class="session uzivatel">
+	<?php
+	echo "<p align=\"right\"> ADMIN: ".$_SESSION["uzivatel"]." </p> " ;
+	?>
+	</div>
+
 		<br />
 		<div class="container">
 			<br />

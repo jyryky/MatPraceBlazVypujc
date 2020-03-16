@@ -15,6 +15,11 @@
 html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 </style>
 <body onload="get_cookies_array()">
+<div class="session uzivatel">
+	<?php
+	echo "<p align=\"right\"> ADMIN: ".$_SESSION["uzivatel"]." </p> " ;
+	?>
+	</div>
 <form method="post" action="">
 <a href=index.php>Zpět na hlavní stránku</a>
 <?php
