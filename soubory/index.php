@@ -55,6 +55,8 @@ if(isset($_GET["action"]))
 
 ?>
 <!DOCTYPE html>
+
+
 <html>
 	<head>
 		<title>BlazRent</title>
@@ -65,7 +67,12 @@ if(isset($_GET["action"]))
 	<body>
 	<div class="session uzivatel">
 	<?php
-	echo "<p align=\"right\"> ADMIN: ".$_SESSION["uzivatel"]." </p> " ;
+	if (isset($_SESSION["uzivatel"])){
+		echo "<p> ADMIN: ".$_SESSION["uzivatel"]." </p>
+		rozcestník pro admina: <a href=\"pridat.html\"> pridat položku</a>, <a href=\"odebrat.html\">odebrat položku</a>" ;
+
+		}
+	
 	?>
 	</div>
 
@@ -114,17 +121,3 @@ if(isset($_GET["action"]))
 					</div>
 	</body>
 </html>
-
-<?php
-//If you have use Older PHP Version, Please Uncomment this function for removing error 
-
-/*function array_column($array, $column_name)
-{
-	$output = array();
-	foreach($array as $keys => $values)
-	{
-		$output[] = $values[$column_name];
-	}
-	return $output;
-}*/
-?>

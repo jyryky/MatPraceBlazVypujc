@@ -16,7 +16,7 @@ if ($conn->connect_error) {
 	echo "konec";
     die("Connection failed: " . $conn->connect_error);
 } 
-$sql = "INSERT INTO MP_produkty (Název, Kategorie, Cena, Popis)
+$sql = "INSERT INTO MP_produkty (Název, id_kategorie, Cena, Popis)
 VALUES ('$nazev', '$kategorie','$cena','$popis')";
 
 if ($conn->query($sql) === TRUE) {
@@ -26,5 +26,5 @@ if ($conn->query($sql) === TRUE) {
 }
 
 $conn->close();
-echo ("<br><a href =index2.html >vrátit se zpátky</a>");
+echo ("<br><a href=\"index.php\" >vrátit se zpátky</a>");
 ?>
