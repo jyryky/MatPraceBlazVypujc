@@ -6,6 +6,9 @@
 <!-- <script src="jquery-3.4.1.min.js"></script> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <link type="text/css" rel="stylesheet" href="css/style.css"/>
 <style>
 html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
@@ -17,17 +20,33 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
     echo "<p align=\"right\"> ADMIN: ".$_SESSION["uzivatel"]." </p> " ;
     }
 	?>
-	</div>
+    </div>
+    
 <input type="button" value="zobrazit košík" onclick="window.location.href='zobrazitkosik.php'; "style="margin:5px;" class="btn btn-success">
-<form method="post" action="odeslat_email.php" id="odeslani_objednavky">
-Jméno: <input type="text" name="name"><br>
-Příjmení: <input type="text" name="surname"><br>
-E-mail: <input type="text" name="email"><br>
-Telefon: <input type="text" name="tel"><br>
+<form method="post" action="odeslat_email.php" id="odeslani_objednavky" >
+<div class="form-group">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="formGroupExampleInput">Jméno:
+            <input type="text" name="name" class="form-control" id="formGroupExampleInput">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="formGroupExampleInput">Příjmení: </label> 
+            <input type="text" class="form-control" id="formGroupExampleInput" name="surname">
+        </div>
+    </div>
+    <div class="form-row">
+            <label for="inputEmail4">E-mail:</label>
+            <input type="email" class="form-control" id="inputEmail4" name="email">
+    </div>
+    <label for="inputEmail4">Telefon: </label>
+<input class="form-control" type="tel" name="tel"><br>
 objednavka od: <input type="date" name="date_from">
 objednavka do: <input type="date" name="date_to">
 <input type="submit" name="submit" >
+</div>
 </form>
+
 <?php
 $db_user="root";
 $db_pass="";
@@ -127,8 +146,8 @@ $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 echo ($txt);
 
 
-//odeslání mailu
-//mail($prijemce,$predmet,$txt,$headers);
+//odeslání mailu NUTNO ODKOMEŘÁŘOVAT
+mail($prijemce,$predmet,$txt,$headers);
 
 
 ?>

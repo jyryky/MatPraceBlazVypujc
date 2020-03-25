@@ -7,7 +7,7 @@ $connect = new mysqli("localhost",$db_user, $db_pass,$db_db);
 if(isset($_POST["add_to_cart"]))
 {
 	if(isset($_SESSION["kosik"]))
-	{
+	{//přídání do array
 		$item_array_id = array_column($_SESSION["kosik"], "item_id");
 		if(!in_array($_GET["ID"], $item_array_id))
 		{
@@ -23,7 +23,7 @@ if(isset($_POST["add_to_cart"]))
 		}
 		else
 		{
-			echo '<script>alert("Item Already Added")</script>';
+			echo '<script>alert("Toto zboží jste již přidal, přejděte do košíku a odstaňte ho")</script>';
 		}
 	}
 	else
@@ -38,7 +38,7 @@ if(isset($_POST["add_to_cart"]))
 	}
 }
 if(isset($_GET["action"]))
-{
+{ //mazání
 	if($_GET["action"] == "delete")
 	{
 		foreach($_SESSION["kosik"] as $keys => $values)
@@ -46,7 +46,7 @@ if(isset($_GET["action"]))
 			if($values["item_id"] == $_GET["ID"])
 			{
 				unset($_SESSION["kosik"][$keys]);
-				echo '<script>alert("Item Removed")</script>';
+				echo '<script>alert("Zboží odstraněno")</script>';
 				echo '<script>window.location="index.php"</script>';
 			}
 		}
@@ -83,13 +83,16 @@ if(isset($_GET["action"]))
 			<br />
 			<br /><br />
 			<?php
+			//výpis všech produků
 				$query = "SELECT * FROM MP_produkty ORDER BY ID";
 				$result = mysqli_query($connect, $query);
 				if(mysqli_num_rows($result) > 0)
 				{
 					while($row = mysqli_fetch_array($result))
 					{
+						
 				?>
+				
 			<div class="col-md-4">
 				<form method="post" action="index.php?action=add&ID=<?php echo $row["ID"]; ?>">
 					<div style="border:1px solid #333; background-color:#f1f1f1; border-radius:5px; padding:16px;" align="center">

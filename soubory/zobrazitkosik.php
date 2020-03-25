@@ -1,20 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <title>Blažrent</title>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
 <!-- <script src="jquery-3.4.1.min.js"></script> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="cookies.js"></script>
 <script src="ajax_nacteni_kosiku.js"></script>
-<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
-<link type="text/css" rel="stylesheet" href="css/style.css"/>
+<!-- <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>-->
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
 <style>
 html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 </style>
+<link  rel="stylesheet"  href="css/style.css">
+</head>
 <body onload="get_cookies_array()">
+<div class="zarovnani">
+<h1><a href="index.php" id="nadpis">BLAŽRENT</a></h1>
 <div class="session uzivatel">
     <?php
     session_start();
@@ -24,20 +31,19 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 	?>
 	</div>
 <form method="post" action="">
-<a href=index.php>Zpět na hlavní stránku</a>
+<a href=index.php>← Zpět na hlavní stránku</a>
 
-
-    <div style="clear:both"></div>
+    <!--<div style="clear:both"></div>-->
     <br />
     <h3>Order Details</h3>
     <div class="table-responsive">
-        <table class="table table-bordered">
+        <table class="table table-hover" style="border-color:black">
             <tr>
-                <th width="40%">Item Name</th>
-                <th width="10%">Quantity</th>
-                <th width="20%">Price</th>
-                <th width="15%">Total</th>
-                <th width="5%">Action</th>
+                <th width="40%">Název produktu</th>
+                <th width="10%">Množství</th>
+                <th width="20%">Cena</th>
+                <th width="15%">Celkem</th>
+                <th width="5%">Odebrat?</th>
             </tr>
             <?php
             if(!empty($_SESSION["kosik"]))
@@ -49,8 +55,8 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
             <tr>
                 <td><?php echo $values["item_name"]; ?></td>
                 <td><?php echo $values["item_quantity"]; ?></td>
-                <td>$ <?php echo $values["item_price"]; ?></td>
-                <td>$ <?php echo number_format($values["item_quantity"] * $values["item_price"], 2);?></td>
+                <td> <?php echo $values["item_price"]; ?> CZK</td>
+                <td> <?php echo number_format($values["item_quantity"] * $values["item_price"], 2);?> CZK</td>
                 <td><a href="zobrazitkosik.php?action=delete&ID=<?php echo $values["item_id"]; ?>"><span class="text-danger">Remove</span></a></td>
             </tr>
             <?php
@@ -58,8 +64,8 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
                 }
             ?>
             <tr>
-                <td colspan="3" align="right">Total</td>
-                <td align="right">$ <?php echo number_format($total, 2); ?></td>
+                <td colspan="3" align="right">Celkem</td>
+                <td align="right"> <?php echo number_format($total, 2); ?> CZK</td>
                 <td></td>
             </tr>
              
@@ -69,21 +75,12 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
                
         </table>
     </div>
-    <div class="pridat do kosiku">
-     
-    
+    <div class="pridatdokosiku">
     <input type="button" value="Dokončit objednávku" onclick="window.location.href='odeslat_email.php'; "style="margin-top:5px;" class="btn btn-success">
+    </div>
 </div>
 </div>
 </div>
 <br />
-
-
-
-
-
-
-
-
 </body>
 </html>

@@ -18,6 +18,7 @@ session_start();
 html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 </style>
 <body>
+<h1>BLAŽRENT</h1>
 <div class="session uzivatel">
 	<?php
 	echo "<p align=\"right\"> ADMIN: ".$_SESSION["uzivatel"]." </p> " ;
