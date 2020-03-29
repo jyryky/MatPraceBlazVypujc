@@ -87,7 +87,7 @@ $sql = "SELECT id FROM `mp_vypujcka` WHERE ( SELECT id FROM mp_zakaznici
 WHERE jmeno = '$jmeno' AND prijmeni = '$prijmeni' AND email='$prijemce' AND telefon='$tel' AND datum_objednavky='$date'
 )
 ORDER BY id DESC LIMIT 1";
-$result=$connect->query($sql);
+
 while($row= $result->fetch_assoc()) {
     $Id_objednavky=$row["id"];
     //echo $Id_objednavky;
@@ -111,10 +111,10 @@ $txt = "Vaše Objednavka Č.".$Id_objednavky." \n Pro: ".$prijemce." ".$prijmeni
 OD:".$objednavka_od."\n<br>
 DO:".$objednavka_do."\n<br>
 Máte objednáno:  \n  <div class=\"table-responsive\"> <table class=\"table table-bordered\"> <tr>
-<th width=>Item Name</th>
-<th width=>Quantity</th>
-<th width=>Price</th>
-<th width=>total</th>
+<th width=>Produkt</th>
+<th width=>Množství</th>
+<th width=>Cena</th>
+<th width=>Celkem</th>
 </tr>
 ";
 foreach($_SESSION["kosik"] as $keys => $values)
@@ -148,7 +148,7 @@ echo ($txt);
 
 //odeslání mailu NUTNO ODKOMEŘÁŘOVAT
 mail($prijemce,$predmet,$txt,$headers);
-
+unset($_SESSION["kosik"]);
 
 ?>
 </body>
@@ -158,6 +158,7 @@ mail($prijemce,$predmet,$txt,$headers);
 elseif (isset($_POST["submit"])) {
 echo "<br>nevyplnil jste všechny údaje";
  }
+ 
 
 ?>
 </body>

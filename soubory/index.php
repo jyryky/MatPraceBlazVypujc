@@ -69,8 +69,9 @@ if(isset($_GET["action"]))
 	<?php
 	if (isset($_SESSION["uzivatel"])){
 		echo "<p> ADMIN: ".$_SESSION["uzivatel"]." </p>
-		rozcestník pro admina: <a href=\"pridat.html\"> pridat položku</a>, <a href=\"odebrat.html\">odebrat položku</a>" ;
-
+		rozcestník pro admina: <a href=\"pridat.html\"> pridat položku</a>, <a href=\"odebrat.html\">odebrat položku</a>
+		<button onclick=\"window.location.href = 'odhlasitse.php';\"style=\"margin-top:5px;\" id=\"odhlasit se button\" >odhlásit se</button>" ;
+		
 		}
 	
 	?>
@@ -98,7 +99,7 @@ if(isset($_GET["action"]))
 					<div style="border:1px solid #333; background-color:#f1f1f1; border-radius:5px; padding:16px;" align="center">
 						<h4 class="text-info"><?php echo $row["Název"]; ?></h4>
 
-						<h4 class="text-danger">$ <?php echo $row["Cena"]; ?></h4>
+						<h4 class="text-danger"><?php echo $row["Cena"]; ?>CZK</h4>
 
 						<input type="text" name="quantity" value="1" class="form-control" />
 
