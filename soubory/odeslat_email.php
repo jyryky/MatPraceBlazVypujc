@@ -13,6 +13,7 @@
 <style>
 html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 </style>
+<link  rel="stylesheet"  href="css/style.css?v=1.0" >
 <body>
 <div class="session uzivatel">
     <?php
@@ -22,29 +23,41 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 	?>
     </div>
     
-<input type="button" value="zobrazit košík" onclick="window.location.href='zobrazitkosik.php'; "style="margin:5px;" class="btn btn-success">
+<input type="button" value="zobrazit košík" onclick="window.location.href='zobrazitkosik.php'; "style="margin:5px;" class="btn btn-warning">
 <form method="post" action="odeslat_email.php" id="odeslani_objednavky" >
-<div class="form-group">
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="formGroupExampleInput">Jméno:
-            <input type="text" name="name" class="form-control" id="formGroupExampleInput">
+    
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="jmeno">Jméno:</label>
+                <input type="text" name="name" class="form-control" id="jmeno">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="prijmeni">Příjmení: </label> 
+                <input type="text" name="surname" class="form-control" id="prijmeni" >
+            </div>
         </div>
-        <div class="form-group col-md-6">
-            <label for="formGroupExampleInput">Příjmení: </label> 
-            <input type="text" class="form-control" id="formGroupExampleInput" name="surname">
-        </div>
+    
+    <div class="form-group col-md-6">
+    
+            <label for="inputEmail">E-mail:</label>
+            <input type="email" class="form-control" id="inputEmail" name="email">
+    </div>
+    <div class="form-group col-md-6">
+            <label for="tel">Telefon: (bez mezer)</label>
+            <input class="form-control" type="tel" name="tel" id="tel"><br>
     </div>
     <div class="form-row">
-            <label for="inputEmail4">E-mail:</label>
-            <input type="email" class="form-control" id="inputEmail4" name="email">
+        <div class="form-group col-md-6">
+            <label for="datum od" class="col-2 col-form-label">objednavka od: </label>
+            <input type="date" name="date_from" class="form-control" id="datum od">
+        </div>
+        <div class="form-group col-md-6">            
+        <label for="datum od" class="col-2 col-form-label">objednavka do: </label>
+        <input type="date" name="date_to" class="form-control" id="datum do">
+        </div>
     </div>
-    <label for="inputEmail4">Telefon: </label>
-<input class="form-control" type="tel" name="tel"><br>
-objednavka od: <input type="date" name="date_from">
-objednavka do: <input type="date" name="date_to">
-<input type="submit" name="submit" >
-</div>
+
+        <input type="submit" name="submit" value="odeslat objednávku" class="btn btn-success" id="odeslat"; style="margin:5px;">
 </form>
 
 <?php
@@ -67,12 +80,22 @@ $predmet = "Objednavka Blazrent";
 $objednavka_od=$_POST["date_from"];
 $objednavka_do=$_POST["date_to"];
 
+$oddate=strtotime($objednavka_od);
+$dodate=strtotime($objednavka_do);
+if ($oddate < $dodate) {
+
+
+    //$interval = date_diff($oddate, $dodate);
+    //echo $interval->format('%R%a days');
+
 $date=date("Y-m-d");
 //echo $date;
-$sql = "INSERT INTO mp_zakaznici (jmeno,prijmeni,email,telefon,datum_objednavky)
-        VALUES ('$jmeno', '$prijmeni','$prijemce', '$tel','$date')";
-//$connect->query($sql)
-$connect->query($sql);
+$stmt =  $connect->prepare( "INSERT INTO mp_zakaznici (jmeno,prijmeni,email,telefon,datum_objednavky) VALUES (?,?,?,?,?)");
+$stmt->bind_param("sssis",$jmeno, $prijmeni, $prijemce, $tel, $date);        
+
+//$connect->query($sql);
+$stmt->execute();
+$stmt->close();
 ///////////////////
 
 //Zápis objednávky
@@ -88,6 +111,7 @@ WHERE jmeno = '$jmeno' AND prijmeni = '$prijmeni' AND email='$prijemce' AND tele
 )
 ORDER BY id DESC LIMIT 1";
 
+$result=$connect->query($sql); 
 while($row= $result->fetch_assoc()) {
     $Id_objednavky=$row["id"];
     //echo $Id_objednavky;
@@ -144,16 +168,19 @@ $txt.="
 $headers = "From: kuablec.jiri@sspbrno.cz" . "\r\n";
 $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 echo ($txt);
-
+echo ("<h1>vaše objednávka byla uspěšně odeslána</h1>");
 
 //odeslání mailu NUTNO ODKOMEŘÁŘOVAT
-mail($prijemce,$predmet,$txt,$headers);
+//mail($prijemce,$predmet,$txt,$headers);
 unset($_SESSION["kosik"]);
-
+}
+else{
+echo '<script>alert("zadejte správně datum")</script>';
+}
 ?>
 </body>
 </html>
-<h1>vaše objednávka byla uspěšně odeslána</h1>
+
 <?php } 
 elseif (isset($_POST["submit"])) {
 echo "<br>nevyplnil jste všechny údaje";

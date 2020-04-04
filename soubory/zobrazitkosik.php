@@ -25,6 +25,23 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 <div class="session uzivatel">
     <?php
     session_start();
+
+    if(isset($_GET["action"]))
+{ 
+    if($_GET["action"] == "delete")
+    {
+        foreach($_SESSION["kosik"] as $keys => $values)
+        {
+            if($values["item_id"] == $_GET["ID"])
+            {
+                unset($_SESSION["kosik"][$keys]);
+                echo '<script>alert("Zboží odstraněno")</script>';
+                echo '<script>window.location="zobrazitkosik.php"</script>';
+            }
+        }
+    }
+}?>
+    <?php
 	if (isset($_SESSION["uzivatel"])){
         echo "<p align=\"right\"> ADMIN: ".$_SESSION["uzivatel"]." </p> " ;
         }
@@ -76,7 +93,12 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
         </table>
     </div>
     <div class="pridatdokosiku">
+    <?php 
+    if(!empty($_SESSION["kosik"]))
+            {
+                ?>
     <input type="button" value="Dokončit objednávku" onclick="window.location.href='odeslat_email.php'; "style="margin-top:5px;" class="btn btn-success">
+    <?php  }?>
     </div>
 </div>
 </div>

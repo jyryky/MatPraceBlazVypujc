@@ -20,8 +20,10 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 <body>
 <h1>BLAŽRENT</h1>
 <div class="session uzivatel">
-	<?php
-	echo "<p align=\"right\"> ADMIN: ".$_SESSION["uzivatel"]." </p> " ;
+    <?php
+    if (isset($_SESSION["uzivatel"])){
+        echo "<p align=\"right\"> ADMIN: ".$_SESSION["uzivatel"]." </p> " ;
+    }
 	?>
 	</div>
 <form method="post" action="prihlaseni.php" id="prihlaseni">
@@ -42,7 +44,8 @@ define('DB_SERVER', 'localhost');
 define('DB_USERNAME', 'root');
 define('DB_PASSWORD', '');
 define('DB_NAME', 'matprac');
-         
+
+
 $db = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
 

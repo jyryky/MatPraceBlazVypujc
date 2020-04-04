@@ -19,7 +19,7 @@ function set_check(me,id){
   console.log(document.cookie)
 }
 $(document).ready(function(){
-    $(':submit').on('click', function() { // This event fires when a button is clicked
+    $(':button').on('click', function() { // This event fires when a button is clicked
       var button = $(this).val();
       var checked = document.querySelector('.checkboxy:checked');
       console.log(checked);
@@ -32,14 +32,15 @@ $(document).ready(function(){
         //alert(data);
         var html = '<table border=1><tr><th>ID</th><th>název</th><th>cena</th><th>kategorie</th><th>popis</th><th>smazat?</th></tr>';
         let fruits = [];
-        $.each(data, function(key, value) {
-             console.log("data",data);
+        $.each(data, function(key, value) 
+       {
+             //console.log("data",data);
           html += '<tr><div id='+value.ID+'>';  
           $.each(value, function(klic, obsah) {
             //alert(klic + ': ' + obsah);
             html += '<td> ' + obsah + '</td>';
           });
-          html += '<td><input type="checkbox" id='+value.ID+' name='+value.ID+' class="checkboxy"  onChange="set_check(this,'+value.ID+')" onclick="myFunction()"form="formular_odebrat" >smazat?</input></td></div></tr>';     
+          html += '<td><input type="checkbox" id='+value.ID+' name="check_list[]" class="checkboxy" value='+value.ID+'  onChange="set_check(this,'+value.ID+')" onclick="myFunction()"form="formular_odebrat" >smazat?</input></td></div></tr>';     
         
  
         });

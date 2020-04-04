@@ -20,7 +20,7 @@ if ($conn->connect_error) {
 // Get value of clicked button
 $button = $_GET['button'];
 //$button ="audio";
-$sql = "SELECT `ID`,`Název`,`id_kategorie`,`Cena`,`Popis` FROM `MP_produkty` ";
+$sql = "SELECT `ID`,`Název`,`id_kategorie`,`Cena`,`Popis` FROM `MP_produkty` WHERE Vyřazené='nevyrazene' ";
 $result = $conn->query($sql);
 while($row = $result->fetch_assoc()) {
     $produkty[]=$row;
