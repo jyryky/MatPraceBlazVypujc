@@ -29,7 +29,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 <form method="post" action="prihlaseni.php" id="prihlaseni">
 Jméno: <input type="text" name="login"><br>
 Heslo: <input type="text" name="pass"><br>
-<input type="submit" value="odešli se">
+<input type="submit" value="Přihlásit se" class="btn btn-success">
 </form>
 
 <?php

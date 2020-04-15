@@ -15,9 +15,9 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 <form method="post" action="odebrat.php" id="formular_odebrat">
 
 <body>
-    <button value="zobraz" type="button">zobraz</button>
-    <div id="produkty">
-    </div>
+<h1><a href="index.php" id="nadpis">BLAŽRENT</a></h1>
+<button value="zobraz" type="button">zobraz</button>
+<div id="produkty">
  <input type="submit" value="odeslat" name="odeslat" id="odeslat" form="formular_odebrat">   
  </form>
 <?php

@@ -99,7 +99,7 @@ if(isset($_POST["add_to_cart"]))
 
 						<h4 class="text-danger"><?php echo $row["Cena"]; ?>CZK</h4>
 
-						<input type="text" name="quantity" value="1" class="form-control" />
+						<input type="number" name="quantity" value="1" class="form-control" />
 
 						<input type="hidden" name="Název" value="<?php echo $row["Název"]; ?>" />
 
@@ -134,7 +134,7 @@ if(isset($_POST["add_to_cart"]))
 
 						<h4 class="text-danger"><?php echo $row["Cena"]; ?>CZK</h4>
 
-						<input type="text" name="quantity" value="1" class="form-control" />
+						<input type="number" name="quantity" value="1" class="form-control" />
 
 						<input type="hidden" name="Název" value="<?php echo $row["Název"]; ?>" />
 

@@ -6,6 +6,8 @@
 
 <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
 <link type="text/css" rel="stylesheet" href="css/style.css"/>
+<body>
+<h1><a href="index.php" id="nadpis">BLAŽRENT</a></h1>
 <?php
 session_start();
 if (isset($_SESSION["uzivatel"])){
@@ -26,7 +28,7 @@ if (isset($_SESSION["uzivatel"])){
             <option value="3">Light</option>
             <option value="4">Grip</option>
             </select><br>
-        Popis <input type="text" name="popis", size="500" form="formular" ><br>      
+        Popis <input type="text" name="popis", size="500" form="formular" class="form-control" id="exampleFormControlTextarea1" ><br>      
         <input type="submit" name="submit" value="submit" form="formular">
    
    <?php 
@@ -69,3 +71,4 @@ echo ("<br><a href=\"index.php\" >vrátit se zpátky</a>");
 }
 
 ?>
+</body>
