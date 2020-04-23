@@ -3,7 +3,7 @@
 
 $db_user="root";
 $db_pass="";
-$db_db="matprac";
+$db_db="matprac2";
 // Create connection
 $conn = new mysqli("localhost",$db_user, $db_pass,$db_db);
 $conn->set_charset("utf8");
