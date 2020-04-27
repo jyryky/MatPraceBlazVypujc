@@ -53,7 +53,7 @@ $login=$_POST["login"];
 $pass=$_POST["pass"];
 
 
-$sql = "SELECT id FROM `mp_admins_bezpassword` WHERE pass='$pass' AND loginn='$login'";
+$sql = "SELECT id FROM `mp_admins` WHERE password='$pass' AND login='$login'";
 $result = mysqli_query($db,$sql);
 $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
 $count = mysqli_num_rows($result);
