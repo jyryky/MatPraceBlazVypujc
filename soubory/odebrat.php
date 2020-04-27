@@ -8,43 +8,57 @@
 <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
 <link type="text/css" rel="stylesheet" href="css/style.css"/>
 <script src="ajax_odstranění.js"></script>
-<script src="cookies.js"></script>
+<script src="ajax_odstranění_evidence.js"></script>
 <style>
 html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 </style>
-<form method="post" action="odebrat.php" id="formular_odebrat">
-
+<?php
+$db_user = "root";
+$db_pass = "";
+$db_db = "matprac2";
+$connect = new mysqli("localhost", $db_user, $db_pass, $db_db);
+?>
 <body>
 <h1><a href="index.php" id="nadpis">BLAŽRENT</a></h1>
-<button value="zobraz" type="button">zobraz</button>
+<button value="Typ" type="button" id="typ">Zobraz evidenci typů produktů</button>
+<button value="kategorie" type="button" id="kategorie">Zobraz evidenci všech produktů</button>
 <div id="produkty">
- <input type="submit" value="odeslat" name="odeslat" id="odeslat" form="formular_odebrat">   
- </form>
+
 <?php
-if(isset($_POST["odeslat"])){
-if(!empty($_POST['check_list'])){
-    $db_user="root";
-    $db_pass="";
-    $db_db="matprac2";
-$connect = new mysqli("localhost",$db_user, $db_pass,$db_db);
-    
+if (isset($_POST["odeslat_typ"])) {
+    if (!empty($_POST['check_list'])) {
+        foreach ($_POST['check_list'] as $selected) {
+            //echo $selected . "</br>";
+            $sql = "UPDATE mp_produkty SET Vyřazené ='vyrazene' WHERE ID='$selected'";
+            if ($connect->query($sql) === true) {
+                echo "Zboží úspěšně vyřazeno";
+            } else {
+                echo "Stala se chyba kontaktujte Admina";
+                //echo $connect->error;
+            }
+            $connect->close();
 
-foreach($_POST['check_list'] as $selected){
-echo $selected."</br>";
-$sql="UPDATE mp_produkty SET Vyřazené ='vyrazene' WHERE ID='$selected'";
-if ($connect->query($sql) === TRUE) {
-    echo "Zboží úspěšně vyřazeno";
-} else {
-    echo "Stala se chyba kontaktujte Admina" ;
-    //echo $connect->error;
-}
-$connect->close();
+        }
+    }
+} 
+if (isset($_POST["odeslat_evidence"])) {
+    if (!empty($_POST['check_list'])) {
+        foreach ($_POST['check_list'] as $selected) {
+           // echo $selected . "</br>";
+            $sql = "UPDATE mp_evidence_produktu
+            SET vyrazen ='vyrazene'
+            WHERE id='$selected'";
+            if ($connect->query($sql) === true) {
+                echo "Zboží úspěšně vyřazeno";
+            } else {
+                echo "Stala se chyba kontaktujte Admina";
+                //echo $connect->error;
+            }
+            $connect->close();
 
+        }
+    }
 }
-}
-}
-
-
 
 ?>
 

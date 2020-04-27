@@ -59,7 +59,7 @@ if (isset($_POST["add_to_cart"])) {
 		<?php
 if (isset($_SESSION["uzivatel"])) {
     echo "<p> ADMIN: " . $_SESSION["uzivatel"] . " </p>
-		rozcestník pro admina: <a href=\"pridat.php\"> pridat položku</a>, <a href=\"odebrat.html\">odebrat položku</a>
+		rozcestník pro admina: <a href=\"pridat.php\"> pridat položku</a>, <a href=\"odebrat.php\">odebrat položku</a>
 		<button onclick=\"window.location.href = 'odhlasitse.php';\"style=\"margin-top:5px;\" id=\"odhlasit se button\" >odhlásit se</button>";
 
 }
@@ -70,9 +70,6 @@ if (isset($_SESSION["uzivatel"])) {
 		<button onclick="window.location.href = 'zobrazitkosik.php';" style="margin-top:5px;"
 			class="btn btn-success">zobrazit kosik</button>
 	</div>
-	<div class="tooltip">zobraz si volné produkty
-		<span class="tooltiptext">čurák
-		</span></div>
 	<div class="input-group mb-3">
 
 		<form method="post" action="index.php">
