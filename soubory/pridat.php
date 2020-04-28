@@ -27,31 +27,55 @@ if (isset($_SESSION["uzivatel"])) {
     }
     $sql = "SELECT `Název`,`ID` FROM `mp_produkty` WHERE Vyřazené='nevyrazene'";
     ?>
-    <div>
+
+    <div id="pridatSkupinuProduktu">
+        <h2 align="center">Přidat novou<br> skupinu techniky</h2>
         <form method="post" action="pridat.php" id="formular">
-            název: <input type="text" name="nazev"><br>
-            cena: <input type="number" name="cena"><br>
-            Celkový počet kusů: <input type="number" name="PocetKusu"><br>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="KatNazev">Název: </label><input type="text" id="KatNazev" class="form-control" placeholder="RCF 312 mkv4"
+                        name="nazev">
+                </div>
+                <div class="form-group">
+                    <label for="KatCena">cena: </label><input type="number" id="KatCena" class="form-control" min=1 placeholder="Cena za den"
+                        name="cena">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="KatPocetKusu">Celkový počet kusů: <input type="number" placeholder="1" class="form-control" id="KatPocetKusu"
+                            name="PocetKusu">
+                </div>
+                <div class="form-group">
         </form>
-        kategorie: <select name="kategorie" form="formular">
-            <option value="1">Audio</option>
-            <option value="2">Video</option>
-            <option value="3">Light</option>
-            <option value="4">Grip</option>
-        </select><br>
-        Popis <input type="text" name="popis" , size="500" form="formular" class="form-control"
-            id="exampleFormControlTextarea1"><br>
-        <input type="submit" name="submit1" value="odeslat" form="formular">
+        <label for="KatKat">kategorie:</label> <select id="KatKat" class="form-control"  name="kategorie" form="formular">
+                <option value="1">Audio</option>
+                <option value="2">Video</option>
+                <option value="3">Light</option>
+                <option value="4">Grip</option>
+            </select>
     </div>
+    </div>
+    
+    <div class="form-row">
+    <div class="form-group">
+    <label for="KatPopis">Popis </label><textarea type="text" name="popis" id="KatPopis" size="500" form="formular" class="form-control"></textarea>
+    <input type="submit" name="submit1" class="btn btn-primary" value="odeslat" form="formular">
+    </div>
+    </div>
+</div>
 
 
 
-    <div>
+    <div id="pridatSamostatnyProduktu"> 
+    <h2 align="center">Přidat novou techniku<br>do evidence</h2>
         <form method="post" action="pridat.php" id="formular2">
         </form>
-        O jaký typ se jedná: <select name="idtypu" form="formular2">
+        <div class="form-group">
+            <div class="form-row">
+       <label for="SamProd"> O jaký typ se jedná: </label><select id="SamProd" name="idtypu" class="form-control" form="formular2">
             <?php
-$result = $conn->query($sql);
+    $result = $conn->query($sql);
     if (mysqli_num_rows($result) > 0) {
         while ($row = $result->fetch_assoc()) {
             echo $row["ID"], $row["Název"];
@@ -59,13 +83,18 @@ $result = $conn->query($sql);
         }
     }
     ?>
+    </div>
+
+    <div class="form-group">
+          
         </select><br>
-        Popis <input type="text" name="Evidence_popis" , size="500" form="formular2" class="form-control"
-            id="exampleFormControlTextarea1"><br>
+        <label for="">Popis </label><textarea type="text" name="Evidence_popis" id="SamPopis" size="500" form="formular2" class="form-control"
+            id="exampleFormControlTextarea1"></textarea>
 
         <input type="submit" name="submit2" value="odeslat" form="formular2">
     </div>
-
+    </div>
+    </div>
     <?php
 } else {
     echo "na toto nemáte práva, nebo nejste přihlášeni";

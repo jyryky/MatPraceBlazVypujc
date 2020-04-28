@@ -74,7 +74,7 @@ if (isset($_SESSION["uzivatel"])) {
 	<div id=selector>
 		<div class="input-group">
 			<form method="post" action="index.php">
-				<select class="custom-select" id="inputGroupSelect04" name="kategorie">
+				<select class="form-control" id="inputGroupSelect04" name="kategorie">
 					<option value="1" name="kategorie">Audio</option>
 					<option value="2" name="kategorie">Video</option>
 					<option value="3" name="kategorie">Light</option>
@@ -231,17 +231,19 @@ if (isset($_POST["submit_kategorie"])) {
 			</div>
 		</div>
 	</div>
+	
 
 	<?php
 }
     }
 }
 ?>
-	<div id="spodniKontainer">
-		<hr class="Podminkycara">
+
+	<div class="position-absolut" id="marginasi" >
+		<hr>
 		<p id="vypujcniPodminky">Výpůjční doba se účtuje ode dne vyzvednutí až po den vrácení.
 			K veškeré technice je kabeláž samozřejmostí. Očekávejte prosím telefonát od našeho technika, který s
-			vámi vyjedná detaily. Platba pouze předem v hotovosti. Ohledně všech nejasností volejte na číslo:+420
+			vámi vyjedná detaily. Platba pouze předem v hotovosti.  <br>Ohledně všech nejasností volejte na číslo:+420
 			606 366 </p>
 	</div>
 	<script>

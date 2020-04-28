@@ -5,26 +5,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- <script src="jquery-3.4.1.min.js"></script> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
-<link type="text/css" rel="stylesheet" href="css/style.css"/>
+<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
 <script src="ajax_odstranění.js"></script>
 <script src="ajax_odstranění_evidence.js"></script>
 <style>
-html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
+    html,
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: "Roboto", sans-serif;
+    }
 </style>
+<link type="text/css" rel="stylesheet" href="css/style.css" />
 <?php
 $db_user = "root";
 $db_pass = "";
 $db_db = "matprac2";
 $connect = new mysqli("localhost", $db_user, $db_pass, $db_db);
 ?>
-<body>
-<h1><a href="index.php" id="nadpis">BLAŽRENT</a></h1>
-<button value="Typ" type="button" id="typ">Zobraz evidenci typů produktů</button>
-<button value="kategorie" type="button" id="kategorie">Zobraz evidenci všech produktů</button>
-<div id="produkty">
 
-<?php
+<body>
+    <h1><a href="index.php" id="nadpis">BLAŽRENT</a></h1>
+    <a href=index.php style="padding-left:3%;" id="podtrzeni">← Zpět na hlavní stránku</a>
+    <div id="nastred2">
+            <button value="Typ" type="button" class="btn btn-warning btn-sm" id="typ">Zobraz evidenci typů produktů</button>
+            <button value="kategorie" type="button" class="btn btn-warning btn-sm" id="kategorie">Zobraz evidenci všech produktů</button>
+    </div>
+    <div id="produkty">
+
+        <?php
 if (isset($_POST["odeslat_typ"])) {
     if (!empty($_POST['check_list'])) {
         foreach ($_POST['check_list'] as $selected) {
@@ -81,4 +94,5 @@ if (isset($_POST["odeslat_evidence"])) {
 
 
 </body>
+
 </html>

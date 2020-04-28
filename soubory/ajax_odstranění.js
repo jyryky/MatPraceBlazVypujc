@@ -15,7 +15,7 @@ $(document).ready(function(){
       })
       .done(function(data) { // Variable data contains the data we get from serverside
         //alert(data);
-        var html = ' <form method="post" action="odebrat.php" id="formular_odebrat"> <table border=1><tr><th>ID</th><th>název</th><th>cena</th><th>PocetKusu</th><th>popis</th><th>smazat?</th></tr>';
+        var html = ' <form method="post" action="odebrat.php" id="formular_odebrat"> <table class="table table-hover" border=1><tr><th>ID</th><th>název</th><th>cena</th><th>PocetKusu</th><th>popis</th><th>smazat?</th></tr>';
         let fruits = [];
         $.each(data, function(key, value) 
        {
@@ -31,7 +31,7 @@ $(document).ready(function(){
  
         });
         
-        html += '</table><input type="submit" value="odeslat" name="odeslat_typ" id="odeslat" form="formular_odebrat">  </form>';
+        html += '</table><input type="submit" value="Odeslat" name="odeslat_typ" class="btn btn-danger btn-lg" id="nastred" form="formular_odebrat">  </form>';
         $('#produkty').html(html); 
             
       });
