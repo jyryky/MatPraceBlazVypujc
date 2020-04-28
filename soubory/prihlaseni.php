@@ -11,25 +11,29 @@ session_start();
 <script src="cookies.js"></script>
 <script src="ajax_nacteni_kosiku.js"></script>
 <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
-<link type="text/css" rel="stylesheet" href="css/style.css"/>
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <style>
 html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 </style>
-<body>
-<h1>BLAŽRENT</h1>
-<div class="session uzivatel">
+<link type="text/css" rel="stylesheet" href="css/style.css"/>
+
+<body id="prihlasenibody">
+<h1 id="nahore">BLAŽRENT</h1>
+
+<div class="session uzivatel" >
     <?php
     if (isset($_SESSION["uzivatel"])){
         echo "<p align=\"right\"> ADMIN: ".$_SESSION["uzivatel"]." </p> " ;
     }
 	?>
 	</div>
-<form method="post" action="prihlaseni.php" id="prihlaseni">
-Jméno: <input type="text" name="login"><br>
-Heslo: <input type="text" name="pass"><br>
-<input type="submit" value="Přihlásit se" class="btn btn-success">
+<form method="post" action="prihlaseni.php" class="form-signin" id="prihlaseni">
+<label for="inputName" class="sr-only">Jméno:</label>
+<input type="text" id="inputName" class="form-control" placeholder="Zadej přihlašovací jméno" name="login" required autofocus>
+<label for="inputPassword" class="sr-only">Heslo:</label> <input type="password" id="inputPassword" class="form-control" name="pass" placeholder="Password" required ><br>
+<input type="submit" value="Přihlásit se" class="btn btn-success btn-lg btn-block">
 </form>
 
 <?php

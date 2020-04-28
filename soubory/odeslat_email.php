@@ -15,10 +15,12 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 </style>
 <link  rel="stylesheet"  href="css/style.css?v=1.0" >
 <body>
+<h1><a href="index.php" id="nadpis">BLAŽRENT</a></h1>
 <div class="session uzivatel">
     <?php
+session_start();
 if (isset($_SESSION["uzivatel"])) {
-    echo "<p align=\"right\"> ADMIN: " . $_SESSION["uzivatel"] . " </p> ";
+    echo "<p id=\"admimOdsazeniOdkraje2\" align=\"right\"> ADMIN: " . $_SESSION["uzivatel"] . " </p> ";
 }
 ?>
     </div>
@@ -30,8 +32,8 @@ $dateBezHodin = date("Y-m-d");
 ///////// kontrola jestli už některý produkt není půjčený
 ?>
 
-
-<input type="button" value="zobrazit košík" onclick="window.location.href='zobrazitkosik.php'; "style="margin:5px;" class="btn btn-warning">
+<div class="odsazeniodkraju">
+<input type="button" value="zobrazit košík" onclick="window.location.href='zobrazitkosik.php'; "style="margin-bottom:30px;margin-left:17px;" class="btn btn-warning">
 <form method="post" action="odeslat_email.php" id="odeslani_objednavky" >
 
         <div class="form-row">
@@ -56,27 +58,30 @@ $dateBezHodin = date("Y-m-d");
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label for="datum od" class="col-2 col-form-label">objednavka od: </label>
+            <label for="datum od" class="col-2 col-form-label">Objednavka od: </label>
             <input type="date" name="date_from" class="form-control" id="datum od">
         </div>
         <div class="form-group col-md-6">
-        <label for="datum od" class="col-2 col-form-label">objednavka do: </label>
+        <label for="datum od" class="col-2 col-form-label">Objednavka do: </label>
         <input type="date" name="date_to" class="form-control" id="datum do">
         </div>
     </div>
-
-        <input type="submit" name="submit" value="odeslat objednávku" class="btn btn-success" id="odeslat"; style="margin:5px;">
+    <div id="odsazeniodtopu">
+        <input type="submit" name="submit" value="odeslat objednávku" class="btn btn-success btn-lg" id="nastred" style="margin-top:250px;">
+</div>
+   
 </form>
-
+</div>
 <?php
+
 $db_user = "root";
 $db_pass = "";
 $db_db = "matprac2";
 $connect = new mysqli("localhost", $db_user, $db_pass, $db_db);
 
 //posílání emailu /////////////////////
-session_start();
-if (isset($_POST["email"]) && isset($_POST["name"]) && isset($_POST["surname"]) && isset($_POST["tel"]) && isset($_POST["date_from"]) && isset($_POST["date_to"])) {
+
+if (isset($_POST["submit"]) AND !empty($_POST["email"]) AND !empty($_POST["name"]) AND !empty($_POST["surname"]) AND !empty($_POST["tel"]) AND !empty($_POST["date_from"]) AND !empty($_POST["date_to"])) {
     $prijemce = $_POST["email"];
     $jmeno = $_POST["name"];
     $prijmeni = $_POST["surname"];
@@ -84,6 +89,8 @@ if (isset($_POST["email"]) && isset($_POST["name"]) && isset($_POST["surname"]) 
     $predmet = "Objednavka Blazrent";
     $objednavka_od = $_POST["date_from"];
     $objednavka_do = $_POST["date_to"];
+
+
 
     $oddate = strtotime($objednavka_od);
     $dodate = strtotime($objednavka_do);
@@ -102,89 +109,8 @@ if (isset($_POST["email"]) && isset($_POST["name"]) && isset($_POST["surname"]) 
         $dateBezHodin = DateTime::createFromFormat('Y-m-d', date('Y-m-d'));
         //$dateBezHodin->modify('+1 day');
         $volneIdProduktu = [];
-        /*foreach ($_SESSION["kosik"] as $keys => $values) {
-        $produktyKtereMajiKolizniDatum = [];
-        $forID = $values["item_id"];
-        $sql = "SELECT mp_produkty.pocetKusu
-        FROM mp_produkty
-        WHERE `ID` = '$forID'";
-        $result = $connect->query($sql);
-        while ($row = $result->fetch_assoc()) {
-        $maxPocetProdutku = $row["pocetKusu"];
-        }
-        $pocetObsazenychProduktu = 0;
-        //for ($i = 1; $i <= $maxPocetProdutku; $i++){ ////////////////////////////////////////////////////////////////////////////////// VYMYSLET ZÍTRA S KLÁROU!!!!!!!
-        $sql2 = "SELECT `mp_vypujcka`.`od`, `mp_vypujcka`.`do` , `mp_evidence_produktu`.`id`, `mp_evidence_produktu`.`id_typu_produktu`
-        FROM `mp_evidence_produktu`, `vypujcka-produkty` vypujcka_produkty, `mp_vypujcka`
-        WHERE `mp_evidence_produktu`.`id` = `vypujcka_produkty`.`id_technika`
-        and `mp_vypujcka`.`id` = `vypujcka_produkty`.`id_vypujcka`
-        and `mp_evidence_produktu`.`id_typu_produktu`='$forID'";
-        $result2 = mysqli_query($connect, $sql2);
-        if (mysqli_num_rows($result2) > 0) {
-        while ($row2 = mysqli_fetch_array($result2)) {
-        if ($row2["do"] >= $date) {
-        $daterow = $row2["od"];
-        $odZDtabazeString = strtotime($row2["od"]);
-        $oddateFOR = $oddate;
-        //for ($j=0; $j<$values["item_quantity"]; $j++){}+
-        for ($iii = 0; $iii <= $days; $iii++) {
-        $breakProDruhýCyklus = 0;
-        for ($ii = 0; $ii <= $days; $ii++) {
-        if ($oddateFOR == $odZDtabazeString) {
-        $pocetObsazenychProduktu++;
-        $breakProDruhýCyklus++;
-        //array_push($produktyKtereMajiKolizniDatum, $row2["id"]);
-        echo "break";
-        break;
-        }
-        $dt = date("Y-m-d", strtotime("+1 day", $odZDtabazeString));
-        $odZDtabazeString = strtotime($dt);
-        }
-        if ($breakProDruhýCyklus == 1) {
-        break;
-        }
-        //$oddateFOR->modify('+1 day');
-        $dt = date("Y-m-d", strtotime("+1 day", $oddateFOR));
-        $oddateFOR = strtotime($dt);
-        // echo $oddateFOR."<br>";
 
-        }
-        echo "<br>  pocet obsazenych produktů " . $pocetObsazenychProduktu;
-        echo "<br> id produktu " . $row2["id_typu_produktu"];
-        echo "<br> id evidence " . $row2["id"];
-        if ($pocetObsazenychProduktu == $values["item_quantity"]) {
-        array_push($produktyKtereMajiKolizniDatum, $row2["id_typu_produktu"]);
-        }
-        array_push($volneIdProduktu, $row2["id"]);
-        }
-        }
-        }
-        $volneIdProduktu = array_unique($volneIdProduktu);
-        print_r($produktyKtereMajiKolizniDatum);
-        echo "<br> item quantity" . $values["item_quantity"];
-        echo "klářina podnminka:".$maxPocetProdutku - count($produktyKtereMajiKolizniDatum);
-        if ($maxPocetProdutku - count($produktyKtereMajiKolizniDatum) < $values["item_quantity"]) {
-        $blby++;
-        echo "blbec:" . $blby;
-        }
-        }
-        //vypsání kolizních produktů
-        if ($blby > 0) {
-        //echo count($produktyKtereMajiKolizniDatum);
-        foreach ($_SESSION["kosik"] as $keys => $values) {
-        for ($i = 0; $i < count($produktyKtereMajiKolizniDatum); $i++) {
-        {if ($values["item_id"] == $produktyKtereMajiKolizniDatum[$i]) {
-        //echo $values["item_name"];
-        unset($_POST);
-        echo '<script type="text/javascript">alert("Následující zboží má kolizní datum: ' . $values["item_name"] . '")</script>';
-
-        }
-        }
-        }
-        }
-        //echo ' <script type="text/javascript">document.location=\'zobrazitkosik.php\'</script>';
-        }*/
-
+                ///
         $PoleIdDobrychProduktu = [];
         $PoleVsechID = [];
         $PoleIdProZapis = [];
@@ -291,6 +217,7 @@ WHERE id = '$Id_objednavky'))";
             $txt = "Vaše Objednavka Č." . $Id_objednavky . " \n Pro: " . $prijemce . " " . $prijmeni . "\n  <br> Email: " . $prijemce . "\n<br> tel:" . $tel . "<br>
 OD:" . $objednavka_od . "\n<br>
 DO:" . $objednavka_do . "\n<br>
+Počet dní:" . $days . "\n<br>
 Máte objednáno:  \n  <div class=\"table-responsive\"> <table class=\"table table-bordered\"> <tr>
 <th width=>Produkt</th>
 <th width=>Množství</th>
@@ -306,7 +233,7 @@ Máte objednáno:  \n  <div class=\"table-responsive\"> <table class=\"table tab
 <td>" . $values["item_price"] . "</td>
 
 
-<td>" . number_format($values["item_quantity"] * $values["item_price"], 2) . "</td>
+<td>" . number_format($days*($values["item_quantity"] * $values["item_price"]), 2) . "</td>
 </tr>"
                 ;
                 $txt .= $add;
@@ -327,6 +254,7 @@ Máte objednáno:  \n  <div class=\"table-responsive\"> <table class=\"table tab
         //odeslání mailu NUTNO ODKOMEŘÁŘOVAT
         //mail($prijemce,$predmet,$txt,$headers);
         unset($_SESSION["kosik"]);
+        $_POST=[];
     } else {
         echo '<script>alert("zadejte správně datum")</script>';
     }
@@ -334,10 +262,18 @@ Máte objednáno:  \n  <div class=\"table-responsive\"> <table class=\"table tab
 </body>
 </html>
 
-<?php } elseif (isset($_POST["submit"])) {
-    echo "<br>nevyplnil jste všechny údaje";
+<?php } 
+elseif (isset($_POST["submit"])) {
+    echo '<script type="text/javascript">alert("Vyplňte prosím všechny údaje.")</script>';
 }
 
 ?>
+<div id="spodniKontainer">
+		<hr class="Podminkycara">
+		<p id="vypujcniPodminky">Výpůjční doba se účtuje ode dne vyzvednutí až po den vrácení.
+			K veškeré technice je kabeláž samozřejmostí. Očekávejte prosím telefonát od našeho technika, který s
+			vámi vyjedná detaily. Platba pouze předem v hotovosti. Ohledně všech nejasností volejte na číslo:+420
+			606 366 </p>
+	</div>
 </body>
 </html>

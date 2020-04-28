@@ -48,7 +48,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 	?>
 	</div>
 <form method="post" action="">
-<a href=index.php>← Zpět na hlavní stránku</a>
+<a href=index.php id="podtrzeni">← Zpět na hlavní stránku</a>
 
     <!--<div style="clear:both"></div>-->
     <br />
@@ -92,17 +92,20 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
                
         </table>
     </div>
-    <div class="pridatdokosiku">
+</div>
+
+
     <?php 
     if(!empty($_SESSION["kosik"]))
-            {
-                ?>
-    <input type="button" value="Dokončit objednávku" onclick="window.location.href='odeslat_email.php'; "style="margin-top:5px;" class="btn btn-success">
+            { ?>          
+    <input class="btn btn-success btn-lg" id="nastred" type="button" value="Dokončit objednávku" onclick="window.location.href='odeslat_email.php'; " >
     <?php  }?>
-    </div>
-</div>
-</div>
-</div>
-<br />
+    <div id="spodniKontainer">
+		<hr class="Podminkycara">
+		<p id="vypujcniPodminky">Výpůjční doba se účtuje ode dne vyzvednutí až po den vrácení.
+			K veškeré technice je kabeláž samozřejmostí. Očekávejte prosím telefonát od našeho technika, který s
+			vámi vyjedná detaily. Platba pouze předem v hotovosti. Ohledně všech nejasností volejte na číslo:+420
+			606 366 </p>
+	</div>
 </body>
 </html>

@@ -36,10 +36,12 @@ if (isset($_POST["odeslat_typ"])) {
                 echo "Stala se chyba kontaktujte Admina";
                 //echo $connect->error;
             }
-            $connect->close();
-
+            
+            
         }
     }
+    $connect->close();
+    unset($_POST);
 } 
 if (isset($_POST["odeslat_evidence"])) {
     if (!empty($_POST['check_list'])) {
@@ -54,10 +56,25 @@ if (isset($_POST["odeslat_evidence"])) {
                 echo "Stala se chyba kontaktujte Admina";
                 //echo $connect->error;
             }
-            $connect->close();
+            $sql2="SELECT  `mp_produkty`.`PocetKusu`, `mp_evidence_produktu`.`id_typu_produktu`
+            FROM `mp_produkty`,`mp_evidence_produktu`
+            WHERE `mp_evidence_produktu`.`id` = '$selected' and `mp_evidence_produktu`.`id_typu_produktu`=`mp_produkty`.`ID`";
+            $result = $connect->query($sql2);
+            $row = $result->fetch_assoc();
+            $idTypuProduktu=$row["id_typu_produktu"];
+            $pocetkusuminusjedna=$row["PocetKusu"]-1;
 
+            $sql3="UPDATE `mp_produkty`
+            SET `PocetKusu` ='$pocetkusuminusjedna'
+            WHERE `ID`='$idTypuProduktu'";
+            $connect->query($sql3) ;
+
+            
+            
         }
     }
+    $connect->close();
+    unset($_POST);
 }
 
 ?>

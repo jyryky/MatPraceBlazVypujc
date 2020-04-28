@@ -1,68 +1,148 @@
 body {
-  background-color:rgba(63, 75, 78, 0.5);
-   
+  background-color: rgba(63, 75, 78, 0.5);
+}
+
+.containerr {
+  margin: auto;
+}
+
+#submit_kategorie {
+  margin-bottom: 3px;
+}
+
+#nastred {
+  margin:auto;
+  display:block;
+}
+
+#admimOdsazeniOdkraje{
+  margin-right: 17px;
+}
+#admimOdsazeniOdkraje2{
+  margin-right: 35px;
+}
+#podtrzeni{
+  text-decoration:underline;
+}
+
+.odsazeniodkraju{
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+#buttonRight{
+float: right;
+margin-right: 5px;
+}
+#nahore{
+  padding: 20px;
+}
+#spodniKontainer{
+  position:absolute;
+  width: auto;
+  height:auto;
+  bottom:0px;
+  right:25%;
+  left:25%;
+
+}
+#prihlaseni{
+  padding-top: 5%;
+}
+#prihlasenibody{
+  display: flex;
+  -ms-flex-align: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding-top:10%;
+  padding-bottom: 25%;
+  background-color: #f5f5f5;
+}
+#vypujcniPodminky{
+  font-size: x-small;
+  text-align: center;
+  padding: 10px;
+}
+
+hr{
+ width: initial;
+
 }
 
 .pridatdokosiku {
-  text-align: center;
+  padding-right: 20px;
 }
-.btn.btn-success{
-  justify-content: center;
-}
-table.table table-bordered{
-  outline-color: black;
-  border:4px solid #000;
-}
-#odeslat{
-  justify-content: center;
-  align-content: center;
-  padding: 0,5%;
-}
-h1 {
-text-align: center;
-font-style: normal;
-font-family: sans-serif;
+#odsazeniodtopu{
+  padding:20px;
 }
 
-a { text-decoration : none; color : #000; }
+.btn.btn-success {
+  justify-content: center;
+}
+
+.postoupitdodokonceni {
+  text-align: center;
+}
+
+table.table table-bordered {
+  outline-color: black;
+  border: 4px solid #000;
+}
+
+#odeslat {
+  justify-content: center;
+  align-content: center;
+  padding: 0, 5%;
+}
+
+h1 {
+  text-align: center;
+  font-style: normal;
+  font-family: sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
 
 a:link {
   text-decoration: none;
-  
-}
-  
-a:visited {
-  text-decoration: none;
-  color : #000;
-}
-  
-  a:hover {
-  text-decoration: none;
-  color : #000;
-}
-  
-a:active {
-  text-decoration: none;
-  color : #000;
-}
-#nadpis{
-font-size: xx-large;
-}
-.zarovnani
-{
-margin: 3%;
-}
-button{
-  align-self: center;
-}
-/* Tooltip container */
-.tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+
 }
 
-/* Tooltip text */
+a:visited {
+  text-decoration: none;
+  color: #000;
+}
+
+a:hover {
+  text-decoration: none;
+  color: #000;
+}
+
+a:active {
+  text-decoration: none;
+  color: #000;
+}
+
+.zarovnani {
+  margin: 3%;
+}
+#selector {
+  padding-left: 16px;
+}
+
+/* Tooltip container */
+.tooltip {
+  display: inline-block;
+  border-bottom: 1px dotted black;
+  /* If you want dots under the hoverable text */
+}
+
 .tooltip .tooltiptext {
   visibility: hidden;
   width: 120px;
@@ -71,8 +151,6 @@ button{
   text-align: center;
   padding: 5px 0;
   border-radius: 6px;
- 
-  /* Position the tooltip text - see examples below! */
   position: absolute;
   z-index: 1;
 }

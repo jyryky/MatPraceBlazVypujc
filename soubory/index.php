@@ -54,35 +54,40 @@ if (isset($_POST["add_to_cart"])) {
 
 <body>
 
-	<div class="session uzivatel">
+	<div class="" style="padding:16px;">
 		<h1><a href="index.php" id="nadpis">BLAŽRENT</a></h1>
 		<?php
 if (isset($_SESSION["uzivatel"])) {
-    echo "<p> ADMIN: " . $_SESSION["uzivatel"] . " </p>
-		rozcestník pro admina: <a href=\"pridat.php\"> pridat položku</a>, <a href=\"odebrat.php\">odebrat položku</a>
-		<button onclick=\"window.location.href = 'odhlasitse.php';\"style=\"margin-top:5px;\" id=\"odhlasit se button\" >odhlásit se</button>";
+    echo "<p id=\"admimOdsazeniOdkraje\" align=\"right\"> ADMIN: " . $_SESSION["uzivatel"] . " </p>
+		Rozcestník pro admina: <a href=\"pridat.php\" id=\"podtrzeni\"> pridat položku</a>, <a href=\"odebrat.php\"  id=\"podtrzeni\">odebrat položku</a>
+		<button onclick=\"window.location.href ='odhlasitse.php'\"; class=\"btn btn-danger btn-xs\" id=\"buttonRight\">odhlásit se</button>";
 
 }
 
 ?>
 	</div>
-	<div class="pridat do kosiku" align="right">
-		<button onclick="window.location.href = 'zobrazitkosik.php';" style="margin-top:5px;"
-			class="btn btn-success">zobrazit kosik</button>
+	<div class="pridatdokosiku" align="right">
+		<button onclick="window.location.href = 'zobrazitkosik.php';" style="margin-bottom:5px;"
+			class="btn btn-warning">Zobrazit kosik</button>
 	</div>
-	<div class="input-group mb-3">
 
-		<form method="post" action="index.php">
-			<select class="custom-select" id="inputGroupSelect02" name="kategorie">
-				<option value="1" name="kategorie">Audio</option>
-				<option value="2" name="kategorie">Video</option>
-				<option value="3" name="kategorie">Light</option>
-				<option value="4" name="kategorie">Grip</option>
-			</select>
-			<input type=submit name="submit_kategorie" value="zobrazit kategorie" id="submit_kategorie" />
-		</form>
-		<div class="container">
-			<?php
+	<div id=selector>
+		<div class="input-group">
+			<form method="post" action="index.php">
+				<select class="custom-select" id="inputGroupSelect04" name="kategorie">
+					<option value="1" name="kategorie">Audio</option>
+					<option value="2" name="kategorie">Video</option>
+					<option value="3" name="kategorie">Light</option>
+					<option value="4" name="kategorie">Grip</option>
+				</select>
+				<input type=submit name="submit_kategorie" value="Zobrazit kategorie" id="submit_kategorie"
+					class="btn btn-secondary btn-xs" />
+			</form>
+		</div>
+	</div>
+	<div class="containerr">
+
+		<?php
 if (!isset($_POST["submit_kategorie"])) {
     //výpis všech produků
     $query = "SELECT * FROM MP_produkty WHERE Vyřazené='nevyrazene' ORDER BY ID";
@@ -90,18 +95,18 @@ if (!isset($_POST["submit_kategorie"])) {
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_array($result)) {
             ?>
-			<div class="col-md-4" style="margin-bottom:10px; ">
-				<div id="vsechny">
-					<form method="post" action="index.php?action=add&ID=<?php echo $row["ID"]; ?>">
-						<div style="border:1px solid #333; background-color:#f1f1f1; border-radius:5px; padding:16px;"
-							align="center">
-							<h4 class="text-info"><?php echo $row["Název"]; ?></h4>
+		<div class="col-md-4" style="margin-bottom:10px; ">
+			<div id="vsechny">
+				<form method="post" action="index.php?action=add&ID=<?php echo $row["ID"]; ?>">
+					<div style="border:1px solid #333; background-color:#f1f1f1; border-radius:5px; padding:16px;"
+						align="center">
+						<h4 class="text-info"><?php echo $row["Název"]; ?></h4>
 
-							<h4 class="text-danger"><?php echo $row["Cena"]; ?>CZK</h4>
+						<h4 class="text-danger"><?php echo $row["Cena"]; ?>CZK</h4>
 
-							<p class="text-info"> Maximální počet kusů:<?php echo $row["pocetKusu"]; ?></p>
+						<p class="text-info"> Maximální počet kusů:<?php echo $row["pocetKusu"]; ?></p>
 
-							<a href type="button" data-html="true" data-toggle="tooltip" data-placement="top" title="
+						<a href type="button" data-html="true" data-toggle="tooltip" data-placement="top" title="
 								<?php
 $date = date("Y-m-d");
             $id = $row["ID"]; //výpis všech volných produktů
@@ -130,30 +135,33 @@ $date = date("Y-m-d");
                 echo "tento produkt je volný kdykoliv";
             }?>
 						">
-								Zobrazit obsazení produktů
-							</a>
-							<br>
-							<input type="number" name="quantity" value="1" class="form-control" />
+							Zobrazit obsazení produktů<sup id="podtrzeni">?</sup>
+						</a>
+						<br>
+						<input type="number" name="quantity" min="1" value="1" class="form-control" />
 
-							<input type="hidden" name="Název" value="<?php echo $row["Název"]; ?>" />
+						<input type="hidden" name="Název" value="<?php echo $row["Název"]; ?>" />
 
-							<input type="hidden" name="pocetKusu" value="<?php echo $row["pocetKusu"]; ?>" />
+						<input type="hidden" name="pocetKusu" value="<?php echo $row["pocetKusu"]; ?>" />
 
-							<input type="hidden" name="Cena" value="<?php echo $row["Cena"]; ?>" />
+						<input type="hidden" name="Cena" value="<?php echo $row["Cena"]; ?>" />
 
-							<input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-success"
-								value="Add to Cart" />
-						</div>
-					</form>
-				</div>
+						<input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-success"
+							value="Přidat do košíku" />
+					</div>
+				</form>
 			</div>
+		</div>
+	</div>
 
-			<?php
+
+
+	<?php
 }
     }
 }
 ?>
-			<?php
+	<?php
 if (isset($_POST["submit_kategorie"])) {
     $kategorie = $_POST["kategorie"];
     $query = "SELECT * FROM MP_produkty WHERE id_kategorie='$kategorie' and Vyřazené='nevyrazene' ORDER BY ID";
@@ -161,7 +169,9 @@ if (isset($_POST["submit_kategorie"])) {
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_array($result)) {
             ?>
-			<div class="col-md-4" style="margin-bottom:10px;">
+	<div id="vsechny">
+		<div class="col-md-4" style="margin-bottom:10px;">
+			<div id="vsechny">
 				<div class="kategorie">
 					<form method="post" action="index.php?action=add&ID=<?php echo $row["ID"]; ?>">
 						<div style="border:1px solid #333; background-color:#f1f1f1; border-radius:5px; padding:16px;"
@@ -174,7 +184,7 @@ if (isset($_POST["submit_kategorie"])) {
 
 							<a href type="button" data-html="true" data-toggle="tooltip" data-placement="top" title="
 								<?php
-$date = date("Y-m-d");
+			$date = date("Y-m-d");
             $id = $row["ID"]; //výpis všech volných produktů
             $query2 = "SELECT `mp_vypujcka`.`od`, `mp_vypujcka`.`do`
 								FROM `mp_evidence_produktu`, `vypujcka-produkty` vypujcka_produkty, `mp_vypujcka`
@@ -204,7 +214,7 @@ $date = date("Y-m-d");
 							</a>
 							<br>
 
-							<input type="number" name="quantity" value="1" class="form-control" />
+							<input type="number" name="quantity" min="1" value="1" class="form-control" />
 
 							<input type="hidden" name="Název" value="<?php echo $row["Název"]; ?>" />
 
@@ -213,22 +223,32 @@ $date = date("Y-m-d");
 							<input type="hidden" name="Cena" value="<?php echo $row["Cena"]; ?>" />
 
 							<input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-success"
-								value="Add to Cart" />
+								value="Přidat do košíku" />
 						</div>
 					</form>
 
 				</div>
 			</div>
-			<?php
+		</div>
+	</div>
+
+	<?php
 }
     }
 }
 ?>
-			<script>
-				$(document).ready(function () {
-					$('[data-toggle="tooltip"]').tooltip();
-				});
-			</script>
+	<div id="spodniKontainer">
+		<hr class="Podminkycara">
+		<p id="vypujcniPodminky">Výpůjční doba se účtuje ode dne vyzvednutí až po den vrácení.
+			K veškeré technice je kabeláž samozřejmostí. Očekávejte prosím telefonát od našeho technika, který s
+			vámi vyjedná detaily. Platba pouze předem v hotovosti. Ohledně všech nejasností volejte na číslo:+420
+			606 366 </p>
+	</div>
+	<script>
+		$(document).ready(function () {
+			$('[data-toggle="tooltip"]').tooltip();
+		});
+	</script>
 </body>
 
 </html>

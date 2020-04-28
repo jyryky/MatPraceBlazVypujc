@@ -11,7 +11,7 @@ if ($conn->connect_error) {
 	echo "konec";
     die("Connection failed: " . $conn->connect_error);
 }
-$sql = "SELECT `ID`,`Název`,`id_kategorie`,`Cena`,`Popis` FROM `MP_produkty` WHERE Vyřazené='nevyrazene' ";
+$sql = "SELECT `ID`,`Název`,`Cena`,`PocetKusu`,`Popis` FROM `MP_produkty` WHERE Vyřazené='nevyrazene' ";
 $result = $conn->query($sql);
 while($row = $result->fetch_assoc()) {
     $produkty[]=$row;
