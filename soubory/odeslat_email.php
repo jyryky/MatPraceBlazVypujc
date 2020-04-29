@@ -81,7 +81,7 @@ $connect = new mysqli("localhost", $db_user, $db_pass, $db_db);
 
 //posílání emailu /////////////////////
 
-if (isset($_POST["submit"]) AND !empty($_POST["email"]) AND !empty($_POST["name"]) AND !empty($_POST["surname"]) AND !empty($_POST["tel"]) AND !empty($_POST["date_from"]) AND !empty($_POST["date_to"])) {
+if (isset($_POST["submit"]) AND !empty($_POST["email"]) AND !empty($_POST["name"]) AND !empty($_POST["surname"]) AND !empty($_POST["tel"]) AND !empty($_POST["date_from"]) AND !empty($_POST["date_to"]) AND !empty($_SESSION["kosik"])) {
     $prijemce = $_POST["email"];
     $jmeno = $_POST["name"];
     $prijmeni = $_POST["surname"];
@@ -109,8 +109,8 @@ if (isset($_POST["submit"]) AND !empty($_POST["email"]) AND !empty($_POST["name"
         $dateBezHodin = DateTime::createFromFormat('Y-m-d', date('Y-m-d'));
         //$dateBezHodin->modify('+1 day');
         $volneIdProduktu = [];
-
-                ///
+        $pocitadlokoliznichproduktu=0;
+//Zjištění jestli je dostatečný počet produktů volný
         $PoleIdDobrychProduktu = [];
         $PoleVsechID = [];
         $PoleIdProZapis = [];
@@ -135,9 +135,6 @@ if (isset($_POST["submit"]) AND !empty($_POST["email"]) AND !empty($_POST["name"
                     if ($rowDoDatetime >= $oddate && $rowoOdDatetime <= $dodate) {
                         array_push($PoleIdKoliznichProduktu, $row["id"]);
                     }
-                   /* print_r($PoleIdKoliznichProduktu);
-                    echo "<br> polevšech id";
-                    print_r($PoleVsechID);*/
 
                 }
             }
@@ -150,23 +147,23 @@ if (isset($_POST["submit"]) AND !empty($_POST["email"]) AND !empty($_POST["name"
                     array_push($PoleVsechID, $row["id"]);
                 }
             }
-            //print_r($PoleVsechID);
-
-            //print_r(array_diff( $PoleVsechID,$PoleIdKoliznichProduktu));
             $PoleVsechID = array_unique($PoleVsechID);
             $PoleIdDobrychProduktu = array_merge($PoleIdDobrychProduktu, array_diff($PoleVsechID, $PoleIdKoliznichProduktu));
-
-            //echo $values["item_max_quantity"];
             if ($values["item_max_quantity"] - count($PoleIdKoliznichProduktu) < $values["item_quantity"]) {
                 echo '<script type="text/javascript">alert("Následující zboží má kolizní datum: ' . $values["item_name"] . '")</script>';
+                $pocitadlokoliznichproduktu++;
             } else {
-
                 while ($values["item_quantity"] > $i) {
+                    //echo "i:".$i;
+                    //print_r($PoleIdDobrychProduktu);
                     array_push($PoleIdProZapis, $PoleIdDobrychProduktu[$i]);
                     $i++;
                 }
             }
         }
+
+if ($pocitadlokoliznichproduktu==0){
+    
 
         //print_r($PoleIdDobrychProduktu);
         //print_r($PoleIdProZapis);
@@ -202,15 +199,13 @@ ORDER BY id DESC LIMIT 1";
         }
 
 //přidělení techniky k objedavce
-        foreach ($PoleIdProZapis as $values2) {
+foreach ($PoleIdProZapis as $values2) {
             $sql = "INSERT INTO `vypujcka-produkty` (`id_technika`,`id_vypujcka`)
-VALUES((SELECT `ID` FROM `mp_produkty`
-WHERE ID = '$values2') ,(SELECT `id` FROM `mp_vypujcka`
+VALUES($values2 ,(SELECT `id` FROM `mp_vypujcka`
 WHERE id = '$Id_objednavky'))";
             $connect->query($sql);
         }
 //}
-
 //email zpáva
         if (!empty($_SESSION["kosik"])) {
             $total = 0;
@@ -219,10 +214,10 @@ OD:" . $objednavka_od . "\n<br>
 DO:" . $objednavka_do . "\n<br>
 Počet dní:" . $days . "\n<br>
 Máte objednáno:  \n  <div class=\"table-responsive\"> <table class=\"table table-bordered\"> <tr>
-<th width=>Produkt</th>
-<th width=>Množství</th>
-<th width=>Cena</th>
-<th width=>Celkem</th>
+<th>Produkt</th>
+<th>Množství</th>
+<th>Cena</th>
+<th>Celkem</th>
 </tr>
 ";
             foreach ($_SESSION["kosik"] as $keys => $values) {
@@ -239,9 +234,7 @@ Máte objednáno:  \n  <div class=\"table-responsive\"> <table class=\"table tab
                 $txt .= $add;
             }
             $txt .= "
-
 </table>
-
 </div>";
         }
         ///email zprava konec
@@ -255,25 +248,30 @@ Máte objednáno:  \n  <div class=\"table-responsive\"> <table class=\"table tab
         //mail($prijemce,$predmet,$txt,$headers);
         unset($_SESSION["kosik"]);
         $_POST=[];
+    }
+elseif($pocitadlokoliznichproduktu>0){
+    echo '<script>window.location="zobrazitkosik.php"</script>';
+}
     } else {
         echo '<script>alert("zadejte správně datum")</script>';
     }
+
     ?>
 </body>
 </html>
 
 <?php } 
 elseif (isset($_POST["submit"])) {
-    echo '<script type="text/javascript">alert("Vyplňte prosím všechny údaje.")</script>';
+    echo '<script type="text/javascript">alert("Vyplňte prosím všechny údaje a zkontrolujte košík.")</script>';
 }
 
 ?>
-<div id="spodniKontainer">
+<div id="spodale a">
 		<hr class="Podminkycara">
 		<p id="vypujcniPodminky">Výpůjční doba se účtuje ode dne vyzvednutí až po den vrácení.
 			K veškeré technice je kabeláž samozřejmostí. Očekávejte prosím telefonát od našeho technika, který s
 			vámi vyjedná detaily. Platba pouze předem v hotovosti. Ohledně všech nejasností volejte na číslo:+420
-			606 366 </p>
+			606 366 008 </p>
 	</div>
 </body>
 </html>

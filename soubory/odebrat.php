@@ -32,8 +32,8 @@ $connect = new mysqli("localhost", $db_user, $db_pass, $db_db);
     <h1><a href="index.php" id="nadpis">BLAŽRENT</a></h1>
     <a href=index.php style="padding-left:3%;" id="podtrzeni">← Zpět na hlavní stránku</a>
     <div id="nastred2">
-            <button value="Typ" type="button" class="btn btn-warning btn-sm" id="typ">Zobraz evidenci typů produktů</button>
-            <button value="kategorie" type="button" class="btn btn-warning btn-sm" id="kategorie">Zobraz evidenci všech produktů</button>
+            <button value="Typ" type="button" class="btn btn-warning btn-sm" aria-pressed="true" id="typ">Zobraz evidenci typů produktů</button>
+            <button value="kategorie" type="button" class="btn btn-warning btn-sm" aria-pressed="true" id="kategorie">Zobraz evidenci všech produktů</button>
     </div>
     <div id="produkty">
 
@@ -44,7 +44,7 @@ if (isset($_POST["odeslat_typ"])) {
             //echo $selected . "</br>";
             $sql = "UPDATE mp_produkty SET Vyřazené ='vyrazene' WHERE ID='$selected'";
             if ($connect->query($sql) === true) {
-                echo "Zboží úspěšně vyřazeno";
+                echo '<script type="text/javascript">alert("Technika vyřazena")</script>';
             } else {
                 echo "Stala se chyba kontaktujte Admina";
                 //echo $connect->error;
@@ -64,7 +64,7 @@ if (isset($_POST["odeslat_evidence"])) {
             SET vyrazen ='vyrazene'
             WHERE id='$selected'";
             if ($connect->query($sql) === true) {
-                echo "Zboží úspěšně vyřazeno";
+                echo '<script type="text/javascript">alert("Technika vyřazena")</script>';
             } else {
                 echo "Stala se chyba kontaktujte Admina";
                 //echo $connect->error;

@@ -3,7 +3,8 @@ body {
 }
 
 .containerr {
-  margin: auto;
+  margin-bottom: 20%;
+  position: relative;
 }
 
 #submit_kategorie {
@@ -28,20 +29,24 @@ padding-bottom: 10px;
 #podtrzeni{
   text-decoration:underline;
 }
+hr{
+  margin:-5px
+}
 #pridatSkupinuProduktu{
 float:left;
 border: solid 1px;
 border-radius: 5px;
 padding:16px;
-margin-left:30px;
+margin-left:30%;
 background-color:rgba(63, 75, 78, 0.5);
 }
 #pridatSamostatnyProduktu{
-  float:left;
+  float:right;
   border: solid 1px;
   border-radius: 5px;
   padding:16px;
-  margin-left:30px;
+  margin-right:30%;
+  margin-left: 3px;
   background-color:rgba(63, 75, 78, 0.5);
   }
 .odsazeniodkraju{
@@ -56,12 +61,10 @@ margin-right: 5px;
 #nahore{
   padding: 20px;
 }
-#spodniKontainer{
-
+.spod{
   bottom:0px;
-  border: 3px solid #8AC007;
-  padding: 20px;
-
+  padding-top: 30px;
+  position: static;
 }
 #prihlaseni{
   padding-top: 5%;
@@ -147,6 +150,7 @@ a:active {
 
 .zarovnani {
   margin: 3%;
+
 }
 #selector {
   padding-left: 16px;

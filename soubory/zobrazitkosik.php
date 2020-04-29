@@ -100,12 +100,12 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
             { ?>          
     <input class="btn btn-success btn-lg" id="nastred" type="button" value="Dokončit objednávku" onclick="window.location.href='odeslat_email.php'; " >
     <?php  }?>
-    <div id="spodniKontainer">
+    <div class="spod">
 		<hr class="Podminkycara">
 		<p id="vypujcniPodminky">Výpůjční doba se účtuje ode dne vyzvednutí až po den vrácení.
 			K veškeré technice je kabeláž samozřejmostí. Očekávejte prosím telefonát od našeho technika, který s
 			vámi vyjedná detaily. Platba pouze předem v hotovosti. Ohledně všech nejasností volejte na číslo:+420
-			606 366 </p>
+			606 366 008</p>
 	</div>
 </body>
 </html>

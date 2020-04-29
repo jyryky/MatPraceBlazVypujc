@@ -9,10 +9,11 @@
 
 <body>
     <h1><a href="index.php" id="nadpis">BLAŽRENT</a></h1>
+    <a href=index.php style="padding-left:3%;" id="podtrzeni">← Zpět na hlavní stránku</a>
     <?php
 session_start();
 if (isset($_SESSION["uzivatel"])) {
-    echo "<p> ADMIN: " . $_SESSION["uzivatel"] . " </p>";
+    echo "<p id=\"admimOdsazeniOdkraje\" align=\"right\"> ADMIN: " . $_SESSION["uzivatel"] . " </p>";
 
     $db_user = "root";
     $db_pass = "";
@@ -34,18 +35,13 @@ if (isset($_SESSION["uzivatel"])) {
             <div class="form-row">
                 <div class="form-group">
                     <label for="KatNazev">Název: </label><input type="text" id="KatNazev" class="form-control" placeholder="RCF 312 mkv4"
-                        name="nazev">
+                        name="nazev" required>
                 </div>
                 <div class="form-group">
                     <label for="KatCena">cena: </label><input type="number" id="KatCena" class="form-control" min=1 placeholder="Cena za den"
-                        name="cena">
+                        name="cena" required>
                 </div>
             </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="KatPocetKusu">Celkový počet kusů: <input type="number" placeholder="1" class="form-control" id="KatPocetKusu"
-                            name="PocetKusu">
-                </div>
                 <div class="form-group">
         </form>
         <label for="KatKat">kategorie:</label> <select id="KatKat" class="form-control"  name="kategorie" form="formular">
@@ -55,12 +51,11 @@ if (isset($_SESSION["uzivatel"])) {
                 <option value="4">Grip</option>
             </select>
     </div>
-    </div>
     
     <div class="form-row">
     <div class="form-group">
-    <label for="KatPopis">Popis </label><textarea type="text" name="popis" id="KatPopis" size="500" form="formular" class="form-control"></textarea>
-    <input type="submit" name="submit1" class="btn btn-primary" value="odeslat" form="formular">
+    <label for="KatPopis">Popis </label><textarea type="text" name="popis" id="KatPopis" size="500" form="formular" class="form-control" required></textarea>
+    <input type="submit" name="submit1" class="btn btn-primary" value="odeslat" id="nastred" style="margin-top:20px;" form="formular" >
     </div>
     </div>
 </div>
@@ -68,7 +63,7 @@ if (isset($_SESSION["uzivatel"])) {
 
 
     <div id="pridatSamostatnyProduktu"> 
-    <h2 align="center">Přidat novou techniku<br>do evidence</h2>
+    <h2 align="center">Přidat nový kus<br> techniky do evidence</h2>
         <form method="post" action="pridat.php" id="formular2">
         </form>
         <div class="form-group">
@@ -89,9 +84,9 @@ if (isset($_SESSION["uzivatel"])) {
           
         </select><br>
         <label for="">Popis </label><textarea type="text" name="Evidence_popis" id="SamPopis" size="500" form="formular2" class="form-control"
-            id="exampleFormControlTextarea1"></textarea>
+            id="exampleFormControlTextarea1" required></textarea>
 
-        <input type="submit" name="submit2" value="odeslat" form="formular2">
+        <input type="submit" name="submit2" value="odeslat" id="nastred" style="margin-top:20px;" class="btn btn-primary" form="formular2">
     </div>
     </div>
     </div>
@@ -107,22 +102,22 @@ if (isset($_POST["submit1"])) {
     $cena = $_POST["cena"];
     $kategorie = $_POST["kategorie"];
     $popis = $_POST["popis"];
-    $pocetKusu = $_POST["PocetKusu"];
 
     $sql = "INSERT INTO MP_produkty (Název, id_kategorie, pocetKusu,Cena, Popis)
-VALUES ('$nazev','$kategorie','$pocetKusu','$cena','$popis')";
+VALUES ('$nazev','$kategorie',0,'$cena','$popis')";
 
     if ($conn->query($sql) === true) {
-        echo "Položka byla úspěšně přidána";
+        echo '<script type="text/javascript">alert("Nová skupina byla úspěšně přidána. Ted přidej jednotlivé produkty")</script>';
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
 
     $conn->close();
-    echo ("<br><a href=\"index.php\" >vrátit se zpátky</a>");
+    unset($_POST);
+
 }
 
-if (isset($_POST["submit2"])) {
+if (isset($_POST["submit2"]) && !empty($_POST["Evidence_popis"])) {
 
     $typ = $_POST["idtypu"];
     $popis = $_POST["Evidence_popis"];
@@ -131,9 +126,10 @@ if (isset($_POST["submit2"])) {
     VALUES ('$typ',' $popis')";
 
     if ($conn->query($sql) === true) {
-        echo "Položka byla úspěšně přidána";
+        //echo '<script type="text/javascript">alert("chyba")</script>';
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
+        echo '<script type="text/javascript">alert("chyba")</script>';
     }
     $sql2 = "SELECT `pocetKusu` FROM `mp_produkty` WHERE ID='$typ'";
     $result = mysqli_query($conn, $sql2);
@@ -142,12 +138,16 @@ if (isset($_POST["submit2"])) {
 
     $sql3 = "UPDATE `mp_produkty` SET `PocetKusu`='$novyPocetKusu' WHERE `ID`='$typ'";
     if ($conn->query($sql3) === true) {
-        echo "upratava";
+        $sql4="SELECT `id` FROM `mp_evidence_produktu` ORDER BY `id` DESC LIMIT 1";
+        $result2 = mysqli_query($conn, $sql4);
+        $row2 = mysqli_fetch_array($result2);
+        echo '<script type="text/javascript">alert("Zboží úspěšně přídáno. Toto zboží má toto evidenční číslo: ' . $row2["id"] . '")</script>';
     } else {
         echo "Error: " . $sql3 . "<br>" . $conn->error;
+        echo '<script type="text/javascript">alert("chyba")</script>';
     }
     $conn->close();
-    echo ("<br><a href=\"index.php\" >vrátit se zpátky</a>");
+    unset($_POST);
 }
 ?>
 </body>

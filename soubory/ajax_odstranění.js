@@ -15,7 +15,7 @@ $(document).ready(function(){
       })
       .done(function(data) { // Variable data contains the data we get from serverside
         //alert(data);
-        var html = ' <form method="post" action="odebrat.php" id="formular_odebrat"> <table class="table table-hover" border=1><tr><th>ID</th><th>název</th><th>cena</th><th>PocetKusu</th><th>popis</th><th>smazat?</th></tr>';
+        var html = ' <form method="post" action="odebrat.php" id="formular_odebrat"> <table class="table table-hover" border=1><tr><th>ID</th><th>název</th><th>cena</th><th>PocetKusu</th><th>popis</th><th>Vyřadit?</th></tr>';
         let fruits = [];
         $.each(data, function(key, value) 
        {
@@ -25,7 +25,7 @@ $(document).ready(function(){
             //alert(klic + ': ' + obsah);
             html += '<td> ' + obsah + '</td>';
           });
-          html += '<td><input type="checkbox" id='+value.ID+' name="check_list[]" class="checkboxy" value='+value.ID+'  onChange="set_check(this,'+value.ID+')" onclick="myFunction()"form="formular_odebrat" >smazat?</input></td></div></tr>';     
+          html += '<td><input type="checkbox" id='+value.ID+' name="check_list[]" class="checkboxy" value='+value.ID+'  onChange="set_check(this,'+value.ID+')" onclick="myFunction()"form="formular_odebrat" > Vyřadit?</input></td></div></tr>';     
         console.log(value.ID);
       
  

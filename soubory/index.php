@@ -72,9 +72,8 @@ if (isset($_SESSION["uzivatel"])) {
 	</div>
 
 	<div id=selector>
-		<div class="input-group">
 			<form method="post" action="index.php">
-				<select class="form-control" id="inputGroupSelect04" name="kategorie">
+				<select name="kategorie">
 					<option value="1" name="kategorie">Audio</option>
 					<option value="2" name="kategorie">Video</option>
 					<option value="3" name="kategorie">Light</option>
@@ -83,14 +82,12 @@ if (isset($_SESSION["uzivatel"])) {
 				<input type=submit name="submit_kategorie" value="Zobrazit kategorie" id="submit_kategorie"
 					class="btn btn-secondary btn-xs" />
 			</form>
-		</div>
 	</div>
 	<div class="containerr">
-
 		<?php
 if (!isset($_POST["submit_kategorie"])) {
     //výpis všech produků
-    $query = "SELECT * FROM MP_produkty WHERE Vyřazené='nevyrazene' ORDER BY ID";
+    $query = "SELECT * FROM MP_produkty WHERE Vyřazené='nevyrazene' AND PocetKusu>0 ORDER BY ID";
     $result = mysqli_query($connect, $query);
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_array($result)) {
@@ -152,7 +149,7 @@ $date = date("Y-m-d");
 				</form>
 			</div>
 		</div>
-	</div>
+
 
 
 
@@ -164,7 +161,7 @@ $date = date("Y-m-d");
 	<?php
 if (isset($_POST["submit_kategorie"])) {
     $kategorie = $_POST["kategorie"];
-    $query = "SELECT * FROM MP_produkty WHERE id_kategorie='$kategorie' and Vyřazené='nevyrazene' ORDER BY ID";
+    $query = "SELECT * FROM MP_produkty WHERE id_kategorie='$kategorie' and Vyřazené='nevyrazene' AND PocetKusu>0 ORDER BY ID";
     $result = mysqli_query($connect, $query);
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_array($result)) {
@@ -238,13 +235,13 @@ if (isset($_POST["submit_kategorie"])) {
     }
 }
 ?>
-
-	<div class="position-absolut" id="marginasi" >
+</div>
+	<div class="spod" id="marginasi" >
 		<hr>
 		<p id="vypujcniPodminky">Výpůjční doba se účtuje ode dne vyzvednutí až po den vrácení.
 			K veškeré technice je kabeláž samozřejmostí. Očekávejte prosím telefonát od našeho technika, který s
 			vámi vyjedná detaily. Platba pouze předem v hotovosti.  <br>Ohledně všech nejasností volejte na číslo:+420
-			606 366 </p>
+			606 366 008 </p>
 	</div>
 	<script>
 		$(document).ready(function () {
